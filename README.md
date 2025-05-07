@@ -4,6 +4,6 @@ uma das funcionalidades é criar listas com seus livros preferidos de cada gêne
 mais avaliados na semana, mês e ano*
 
 -Principais Funcionalidades
-  *Dar Notas em Livros*/
+  *Dar Notas em Livros*
   /*Criar Listas de Livros*/
   *Criar e Comentar em Comunidades*
