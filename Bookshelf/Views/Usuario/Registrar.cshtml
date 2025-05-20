@@ -1,0 +1,31 @@
+@model Bookshelf.Models.Usuario
+
+<h2>Cadastro de Usuário</h2>
+
+<form asp-action="Registrar" method="post">
+    <div>
+        <label>Nome:</label>
+        <input asp-for="Nome" />
+        <span asp-validation-for="Nome"></span>
+    </div>
+    <div>
+        <label>Email:</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label>Senha:</label>
+        <input asp-for="SenhaHash" type="password" />
+        <span asp-validation-for="SenhaHash"></span>
+    </div>
+    <div>
+        <label>Foto de Perfil (URL):</label>
+        <input asp-for="FotoPerfil" />
+        <span asp-validation-for="FotoPerfil"></span>
+    </div>
+    <button type="submit">Cadastrar</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
