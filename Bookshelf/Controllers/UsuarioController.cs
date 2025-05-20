@@ -28,7 +28,7 @@ namespace Bookshelf.Controllers
             if (!ModelState.IsValid)
                 return View(usuario);
 
-            // Força o papel como Usuario comum
+            // Força o papel como Usuario comum pra ele nao poder criar uma conta de adm
             usuario.Papel = PapelUsuario.Usuario;
             usuario.DataCadastro = DateTime.UtcNow;
 
