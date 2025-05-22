@@ -1,0 +1,39 @@
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.floating {
+    animation: float 4s ease-in-out infinite;
+}
+.gold-gradient {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+.gold-text {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.auth-btn {
+    transition: all 0.2s ease;
+}
+.auth-btn:hover {
+    transform: translateY(-2px);
+}
+.input-field {
+    transition: all 0.3s ease;
+}
+.input-field:focus {
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.5);
+}
+.social-btn {
+    transition: all 0.2s ease;
+}
+.social-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.progress-bar {
+    height: 4px;
+    transition: width 0.5s ease;
+}
