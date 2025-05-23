@@ -28,7 +28,6 @@ namespace Bookshelf.Controllers
             if (!ModelState.IsValid)
                 return View(usuario);
 
-            // Força o papel como Usuario comum pra ele nao poder criar uma conta de adm
             usuario.Papel = PapelUsuario.Usuario;
             usuario.DataCadastro = DateTime.UtcNow;
 
@@ -41,6 +40,30 @@ namespace Bookshelf.Controllers
         // GET: /Usuario/Sucesso
         public IActionResult Sucesso()
         {
+            return View();
+        }
+
+        // GET: /Usuario/Login
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: /Usuario/Login
+        [HttpPost]
+        public IActionResult Login(string email, string senha)
+        {
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email && u.SenhaHash == senha);
+
+
+            if (usuario != null)
+            {
+                // Aqui você pode adicionar lógica de autenticação (cookies, sessão, etc.)
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError(string.Empty, "E-mail ou senha inválidos");
             return View();
         }
     }

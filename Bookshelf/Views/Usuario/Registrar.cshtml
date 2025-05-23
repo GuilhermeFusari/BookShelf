@@ -1,28 +1,10 @@
 @model Bookshelf.Models.Usuario
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookShelf - Cadastro</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body class="bg-blue-50 min-h-screen flex flex-col text-gray-800">
-    <header class="bg-blue-800 text-blue-50 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="gold-gradient p-2 rounded-lg">
-                    <i class="fas fa-book-open text-xl"></i>
-                </div>
-                <h1 class="text-xl font-bold">BookShelf</h1>
-            </div>
-            <a href="#" class="hover:text-amber-300 transition">Voltar ao site</a>
-        </div>
-    </header>
-
+@{
+    Layout="~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Cadastro";
+    ViewData["HideLogo"] = false;
+}
     <main class="flex-grow flex items-center justify-center p-4">
         <div class="container mx-auto max-w-4xl">
             <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row">
@@ -33,7 +15,7 @@
                     </div>
                     <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&q=80" alt="Pessoa lendo livro" class="w-full max-w-xs mx-auto rounded-lg floating" />
                     <div class="mt-8 text-center">
-                        <p class="text-blue-200">Já tem uma conta? <a href="#" class="gold-text font-medium hover:underline">Faça login</a></p>
+                        <p class="text-blue-200">Já tem uma conta? <a asp-controller="Login" asp-action="Index" class="gold-text font-medium hover:underline">Faça login</a></p>
                     </div>
                 </div>
 
@@ -53,7 +35,7 @@
                         </div>
                     </div>
 
-                    <form id="registrationForm" class="space-y-4" asp-action="Registrar" method="post">
+                    <form id="registrationForm" asp-action="Registrar" method="post" class="space-y-4">
                         <div>
                             <label asp-for="Nome" class="block text-sm font-medium mb-1">Nome completo</label>
                             <div class="relative">
@@ -143,7 +125,6 @@
 
     @section Scripts {
         <partial name="_ValidationScriptsPartial" />
-
         <script>
             document.getElementById('togglePassword')?.addEventListener('click', function () {
                 const pwInput = document.querySelector('input[name="SenhaHash"]');
@@ -221,5 +202,3 @@
             };
         </script>
     }
-</body>
-</html>

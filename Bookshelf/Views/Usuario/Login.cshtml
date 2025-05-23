@@ -1,0 +1,130 @@
+@{
+    ViewData["Title"] = "Login";
+    ViewData["MainContainerClass"] = "container mx-auto max-w-4xl";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row">
+    <!-- Ilustração -->
+    <div class="md:w-1/2 bg-gradient-to-br from-blue-700 to-blue-900 p-8 text-blue-50 flex flex-col justify-center">
+        <div class="text-center mb-6">
+            <h2 class="text-2xl font-bold mb-2">Bem-vindo de volta!</h2>
+            <p class="text-blue-200">Acesse sua conta para continuar sua jornada literária</p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+             alt="Pilha de livros" 
+             class="w-full max-w-xs mx-auto rounded-lg floating" />
+        <div class="mt-8 text-center">
+            <p class="text-blue-200">Ainda não tem uma conta? <a href="/Usuario/Registrar" class="gold-text font-medium hover:underline">Cadastre-se</a></p>
+        </div>
+    </div>
+
+    <!-- Formulário de login -->
+    <div class="md:w-1/2 p-8 md:p-10">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2">Faça login</h2>
+            <p class="text-gray-600">Use suas credenciais para acessar sua conta</p>
+        </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="text-red-600 mb-4">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+
+        <form method="post" action="/Usuario/Login" class="space-y-6">
+            <!-- Email Field -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input type="email" id="email" name="email" 
+                           class="input-field pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300" 
+                           placeholder="seu@email.com" required>
+                </div>
+            </div>
+
+            <!-- Password Field -->
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800 hover:underline">Esqueceu a senha?</a>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="senha" name="senha" 
+                           class="input-field pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300" 
+                           placeholder="••••••••" required>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <button type="button" class="text-gray-400 hover:text-gray-500" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="flex items-center">
+                <input id="remember-me" name="remember-me" type="checkbox" 
+                       class="h-4 w-4 text-amber-500 focus:ring-amber-500 border-gray-300 rounded">
+                <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                    Lembrar de mim
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" 
+                    class="auth-btn gold-gradient hover:bg-amber-500 w-full py-3 px-4 border border-transparent rounded-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                Entrar
+            </button>
+
+            <!-- Divider -->
+            <div class="relative">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-2 bg-white text-gray-500">Ou continue com</span>
+                </div>
+            </div>
+
+            <!-- Social Login Buttons -->
+            <div class="grid grid-cols-2 gap-3">
+                <a href="#" class="social-btn bg-white border border-gray-300 rounded-lg py-2 px-4 flex items-center justify-center text-gray-700 hover:bg-gray-50">
+                    <i class="fab fa-google text-red-500 mr-2"></i>
+                    Google
+                </a>
+                <a href="#" class="social-btn bg-blue-600 text-white rounded-lg py-2 px-4 flex items-center justify-center hover:bg-blue-700">
+                    <i class="fab fa-facebook-f mr-2"></i>
+                    Facebook
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    // Toggle password visibility
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('senha');
+        const icon = this.querySelector('i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+</script>
+}
