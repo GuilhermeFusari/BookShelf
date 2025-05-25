@@ -1,30 +1,31 @@
-using Microsoft.EntityFrameworkCore;
 using Bookshelf.Db;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("dbconn")));
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Usuario/Login";
+        options.LogoutPath = "/Usuario/Logout";
+        options.ExpireTimeSpan = TimeSpan.FromHours(1);
+    });
 
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
-
-app.UseStaticFiles(); 
+app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();  // <== importante, vem antes do UseAuthorization
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

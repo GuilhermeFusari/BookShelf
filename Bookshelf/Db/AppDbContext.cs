@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Bookshelf.Models;
+using System;
+using BCrypt.Net;
 
 namespace Bookshelf.Db
 {
@@ -14,6 +16,31 @@ namespace Bookshelf.Db
         public DbSet<Comunidade> Comunidades { get; set; }
         public DbSet<UsuarioComunidade> UsuarioComunidades { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Comentario> Comentarios {get; set;}
+        public DbSet<Comentario> Comentarios { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Avaliacao>()
+                .HasKey(a => new { a.UsuarioId, a.LivroId });
+
+            modelBuilder.Entity<UsuarioComunidade>()
+                .HasKey(uc => new { uc.UsuarioId, uc.ComunidadeId });
+
+            // Seed usuário admin:
+            modelBuilder.Entity<Usuario>().HasData(
+                new
+                {
+                    Id = 1,
+                    Nome = "Admin",
+                    Email = "admin@bookshelf.com",
+                    SenhaHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
+                    DataCadastro = DateTime.UtcNow,
+                    Papel = Bookshelf.Models.Enums.PapelUsuario.Administrador
+
+                }
+            );
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

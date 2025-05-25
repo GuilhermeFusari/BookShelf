@@ -4,6 +4,7 @@ namespace Bookshelf.Models
     {
         public int UsuarioId { get; set; }
         public int LivroId { get; set; }
+
         public int Nota { get; set; } 
         public required string Comentario { get; set; }
         public required string Status { get; set; } 
