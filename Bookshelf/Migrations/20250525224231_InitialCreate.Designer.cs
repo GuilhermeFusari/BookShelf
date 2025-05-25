@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookshelf.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250525194429_InitialCreate")]
+    [Migration("20250525224231_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -227,11 +227,11 @@ namespace Bookshelf.Migrations
                         new
                         {
                             Id = 1,
-                            DataCadastro = new DateTime(2025, 5, 25, 19, 44, 29, 617, DateTimeKind.Utc).AddTicks(6885),
+                            DataCadastro = new DateTime(2025, 5, 25, 22, 42, 30, 824, DateTimeKind.Utc).AddTicks(9049),
                             Email = "admin@bookshelf.com",
                             Nome = "Admin",
                             Papel = 1,
-                            SenhaHash = "$2a$11$LGZsMph/DBwPhkyFth8f7OMSsaZazMo89yinxNqBzjQPaEv8y8Kh."
+                            SenhaHash = "$2a$11$gInHlZ1ZFBNoobYqkP5OoewmoegAYgc7Hu2vJSqUJ/W10U7MTfkzG"
                         });
                 });
 
