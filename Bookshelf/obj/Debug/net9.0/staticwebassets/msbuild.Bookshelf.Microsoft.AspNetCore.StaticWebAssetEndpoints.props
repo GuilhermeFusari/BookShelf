@@ -1,0 +1,16 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/Bookshelf/css/site.34okgcs00z.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"34okgcs00z"},{"Name":"integrity","Value":"sha256-EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9\u002BjYXW1V4e4="},{"Name":"label","Value":"_content/Bookshelf/css/site.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2695"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9\u002BjYXW1V4e4=\u0022"},{"Name":"Last-Modified","Value":"Tue, 27 May 2025 17:17:15 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Bookshelf/css/site.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9\u002BjYXW1V4e4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2695"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9\u002BjYXW1V4e4=\u0022"},{"Name":"Last-Modified","Value":"Tue, 27 May 2025 17:17:15 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

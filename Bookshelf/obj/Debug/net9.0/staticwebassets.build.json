@@ -1,0 +1,362 @@
+{
+  "Version": 1,
+  "Hash": "TO55DD5K8YX9MVrncPSYEYCu5Y8tARN1voX4IRNXVUw=",
+  "Source": "Bookshelf",
+  "BasePath": "_content/Bookshelf",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Bookshelf\\wwwroot",
+      "Source": "Bookshelf",
+      "ContentRoot": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\wwwroot\\",
+      "BasePath": "_content/Bookshelf",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\obj\\Debug\\net9.0\\compressed\\s5bv6pcqqa-34okgcs00z.gz",
+      "SourceId": "Bookshelf",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/Bookshelf",
+      "RelativePath": "css/site#[.{fingerprint=34okgcs00z}]?.css.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\wwwroot\\css\\site.css",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "os3yize17l",
+      "Integrity": "uCWmB8+5orQb7FXfSd1CAplawMkFZ4x+wVyac2vEdr4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\wwwroot\\css\\site.css",
+      "SourceId": "Bookshelf",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\wwwroot\\",
+      "BasePath": "_content/Bookshelf",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "34okgcs00z",
+      "Integrity": "EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/site.34okgcs00z.css",
+      "AssetFile": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\obj\\Debug\\net9.0\\compressed\\s5bv6pcqqa-34okgcs00z.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001123595506"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "889"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uCWmB8+5orQb7FXfSd1CAplawMkFZ4x+wVyac2vEdr4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 May 2025 17:17:15 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "34okgcs00z"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.34okgcs00z.css",
+      "AssetFile": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2695"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 May 2025 17:17:15 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "34okgcs00z"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.34okgcs00z.css.gz",
+      "AssetFile": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\obj\\Debug\\net9.0\\compressed\\s5bv6pcqqa-34okgcs00z.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "889"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uCWmB8+5orQb7FXfSd1CAplawMkFZ4x+wVyac2vEdr4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 May 2025 17:17:15 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "34okgcs00z"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-uCWmB8+5orQb7FXfSd1CAplawMkFZ4x+wVyac2vEdr4="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\obj\\Debug\\net9.0\\compressed\\s5bv6pcqqa-34okgcs00z.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001123595506"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "889"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uCWmB8+5orQb7FXfSd1CAplawMkFZ4x+wVyac2vEdr4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 May 2025 17:17:15 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2695"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 May 2025 17:17:15 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-EzcqS/KEetsq9YMcqC6CJXPl5ysPoWks9+jYXW1V4e4="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css.gz",
+      "AssetFile": "C:\\Users\\guilh\\OneDrive\\Área de Trabalho\\BookShelf\\Bookshelf\\obj\\Debug\\net9.0\\compressed\\s5bv6pcqqa-34okgcs00z.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "889"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"uCWmB8+5orQb7FXfSd1CAplawMkFZ4x+wVyac2vEdr4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 27 May 2025 17:17:15 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-uCWmB8+5orQb7FXfSd1CAplawMkFZ4x+wVyac2vEdr4="
+        }
+      ]
+    }
+  ]
+}

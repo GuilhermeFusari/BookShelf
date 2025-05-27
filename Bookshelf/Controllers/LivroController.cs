@@ -17,7 +17,8 @@ namespace Bookshelf.Controllers
         [HttpGet]
         public IActionResult Gerenciamento()
         {
-            return View();
+            var livros = _context.Livros.ToList();
+            return View(livros); 
         }
 
         [HttpGet]
@@ -35,12 +36,49 @@ namespace Bookshelf.Controllers
             TempData["MensagemSucesso"] = "Livro cadastrado com sucesso!";
             return RedirectToAction("Gerenciamento");
         }
+        [HttpGet]
+        public IActionResult Editar(int id)
+        {
+            var livro = _context.Livros.FirstOrDefault(l => l.Id == id);
+            if (livro == null)
+                return NotFound();
+
+            return View(livro); 
+        }
+
+        [HttpPost]
+        public IActionResult Editar(Livro livro)
+        {
+            var livroDb = _context.Livros.FirstOrDefault(l => l.Id == livro.Id);
+            if (livroDb == null)
+                return NotFound();
+
+            livroDb.Titulo = livro.Titulo;
+            livroDb.Autor = livro.Autor;
+            livroDb.Editora = livro.Editora;
+            livroDb.AnoPublicacao = livro.AnoPublicacao;
+            livroDb.ISBN = livro.ISBN;
+            livroDb.Genero = livro.Genero;
+            livroDb.CapaUrl = livro.CapaUrl;
+
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Gerenciamento");
+        }
 
         [HttpGet]
-        public IActionResult ListarLivros()
+        public IActionResult Excluir(int id)
         {
-            var livros = _context.Livros.ToList();
-            return Json(livros);
+            var livro = _context.Livros.FirstOrDefault(l => l.Id == id);
+            if (livro == null)
+                return NotFound();
+
+            _context.Livros.Remove(livro);
+            _context.SaveChanges();
+
+            TempData["MensagemSucesso"] = "Livro excluído com sucesso!";
+            return RedirectToAction("Gerenciamento");
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Bookshelf.Controllers
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
 
-            return RedirectToAction("Sucesso");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Sucesso()
@@ -40,7 +40,7 @@ namespace Bookshelf.Controllers
             return View();
         }
 
-        [HttpGet]
+         [HttpGet]
         public IActionResult Login()
         {
             return View();
@@ -79,6 +79,7 @@ namespace Bookshelf.Controllers
             ModelState.AddModelError(string.Empty, "E-mail ou senha inválidos");
             return View();
         }
+        
 
         public IActionResult ListarUsuarios()
         {

@@ -224,11 +224,11 @@ namespace Bookshelf.Migrations
                         new
                         {
                             Id = 1,
-                            DataCadastro = new DateTime(2025, 5, 25, 22, 42, 30, 824, DateTimeKind.Utc).AddTicks(9049),
+                            DataCadastro = new DateTime(2025, 5, 27, 19, 3, 52, 334, DateTimeKind.Utc).AddTicks(2549),
                             Email = "admin@bookshelf.com",
                             Nome = "Admin",
                             Papel = 1,
-                            SenhaHash = "$2a$11$gInHlZ1ZFBNoobYqkP5OoewmoegAYgc7Hu2vJSqUJ/W10U7MTfkzG"
+                            SenhaHash = "$2a$11$TDz7Z1x5spk2b5PmQHkiFuYgayK0rQIdDaeNQ3MyvwI2x4neB0BJq"
                         });
                 });
 
