@@ -1,10 +1,18 @@
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+/* Sidebar scrollbar */
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: #1e40af transparent;
 }
-.floating {
-    animation: float 4s ease-in-out infinite;
+.sidebar::-webkit-scrollbar {
+    width: 6px;
 }
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #1e40af;
+    border-radius: 3px;
+}
+
+/* Gradients */
 .gold-gradient {
     background: linear-gradient(135deg, #f59e0b, #fbbf24);
 }
@@ -14,14 +22,37 @@
     background-clip: text;
     color: transparent;
 }
-/* Unificando botões de autenticação */
+
+/* Modal */
+.modal {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Hover effects */
+.table-row-hover:hover {
+    background-color: #f3f4f6;
+}
+.pagination-active {
+    background-color: #1e40af;
+    color: white;
+}
+.book-cover {
+    transition: transform 0.3s ease;
+}
+.book-cover:hover {
+    transform: scale(1.05);
+}
+
+/* Auth and input buttons */
 .auth-btn {
     transition: all 0.2s ease;
 }
 .auth-btn:hover {
     transform: translateY(-2px);
 }
-/* Input e social buttons */
 .input-field {
     transition: all 0.3s ease;
 }
@@ -35,11 +66,16 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-/* Progress bar */
-.progress-bar {
-    height: 4px;
-    transition: width 0.5s ease;
+
+/* Footer link */
+.footer-link {
+    transition: all 0.2s ease;
 }
+.footer-link:hover {
+    color: #fbbf24;
+    transform: translateX(3px);
+}
+
 /* Book card */
 .book-card {
     transition: all 0.3s ease;
@@ -49,6 +85,7 @@
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
+
 /* Genre icon */
 .genre-icon {
     transition: all 0.2s ease;
@@ -57,27 +94,14 @@
     transform: scale(1.1);
     filter: brightness(1.1);
 }
-/* Sidebar scrollbar */
-.sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: #1e40af transparent;
+
+/* Progress bar */
+.progress-bar {
+    height: 4px;
+    transition: width 0.5s ease;
 }
-.sidebar::-webkit-scrollbar {
-    width: 6px;
-}
-.sidebar::-webkit-scrollbar-thumb {
-    background-color: #1e40af;
-    border-radius: 3px;
-}
-/* Footer link */
-.footer-link {
-    transition: all 0.2s ease;
-}
-.footer-link:hover {
-    color: #fbbf24;
-    transform: translateX(3px);
-}
-/* Text scale */
+
+/* Text sizing */
 .text-scale-90 {
     font-size: 0.9rem;
 }
@@ -87,20 +111,23 @@
 .text-scale-75 {
     font-size: 0.75rem;
 }
-/* Leading */
+
+/* Line height */
 .leading-tight {
     line-height: 1.25;
 }
 .leading-normal {
     line-height: 1.5;
 }
-/* Scale */
+
+/* Scaling */
 .scale-95 {
     transform: scale(0.95);
 }
 .scale-90 {
     transform: scale(0.9);
 }
+
 /* Search bar */
 .search-bar {
     transition: all 0.3s ease;
@@ -117,3 +144,17 @@
         width: 200px;
     }
 }
+
+/* Floating animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+.floating {
+    animation: float 4s ease-in-out infinite;
+}
+

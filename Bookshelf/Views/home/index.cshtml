@@ -123,8 +123,11 @@
                         <i class="fas fa-search absolute left-3 top-3 text-blue-200"></i>
                     </div>
                 </div>
-                
+                    
                 <div class="flex space-x-3">
+                    <a href="/Livro/Gerenciamento" class="auth-btn gold-gradient text-white px-4 py-1 rounded-full font-medium transition text-scale-90"></a>
+                    Gerenciar Livros
+                    </a>
                     <a href="/Usuario/Login" class="auth-buttons border border-blue-200 hover:border-amber-300 text-blue-50 hover:text-amber-300 px-4 py-1 rounded-full font-medium transition text-scale-90">
                         Login
                     </a>
@@ -587,12 +590,11 @@
             }
         });
 
-        // Search functionality
         document.querySelectorAll('.search-bar').forEach(input => {
             input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     alert('Você pesquisou por: ' + this.value);
-                    // Aqui você pode adicionar a lógica de pesquisa real
+
                 }
             });
         });

@@ -1,0 +1,881 @@
+@{
+    ViewData["Title"] = "Gerenciamento de Livros";
+    Layout = "_Layout"; 
+}
+
+<main class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar Menu -->
+        <div class="w-56 bg-blue-800 text-blue-50 fixed h-full hidden md:block sidebar overflow-y-auto">
+            <div class="p-4">
+                <div class="flex items-center space-x-2 mb-8">
+                    <div class="gold-gradient p-2 rounded-lg">
+                        <i class="fas fa-book-open text-xl text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">BookShelf Admin</h1>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Menu</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-tachometer-alt w-4"></i>
+                            <span>Dashboard</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-users w-4"></i>
+                            <span>Usuários</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded bg-blue-700">
+                            <i class="fas fa-book w-4"></i>
+                            <span>Livros</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-tags w-4"></i>
+                            <span>Categorias</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-comments w-4"></i>
+                            <span>Comentários</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Relatórios</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-chart-line w-4"></i>
+                            <span>Estatísticas</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-file-export w-4"></i>
+                            <span>Exportar Dados</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="text-base font-semibold mb-3 gold-text">Configurações</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-cog w-4"></i>
+                            <span>Sistema</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-user-shield w-4"></i>
+                            <span>Permissões</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 md:ml-56">
+            <!-- Header -->
+            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-toggle" class="md:hidden text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-bold text-blue-800">Gerenciamento de Livros</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="text-blue-800 hover:text-blue-600">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="font-medium hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="p-4">
+                <!-- Actions Bar -->
+                <div class="bg-white rounded-lg shadow-sm p-4 mb-4">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="relative w-full md:w-64">
+                            <input type="text" placeholder="Buscar livros..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                                <i class="fas fa-filter"></i>
+                                <span>Filtrar</span>
+                            </button>
+                            <a href="/Livro/RegistroLivro" class="gold-gradient hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                                <i class="fas fa-plus"></i>
+                                <span>Adicionar Livro</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books Table -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" class="h-4 w-4 text-blue-600 rounded">
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Livro</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Autor</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adicionado</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Avaliação</th>
+                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200" id="books-table-body">
+                                <!-- Books will be inserted here by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Mostrando
+                                    <span class="font-medium" id="pagination-from">1</span>
+                                    até
+                                    <span class="font-medium" id="pagination-to">10</span>
+                                    de
+                                    <span class="font-medium" id="pagination-total">50</span>
+                                    resultados
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Anterior</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a href="#" aria-current="page" class="pagination-active relative inline-flex items-center px-4 py-2 border border-gray-300 bg-blue-50 text-sm font-medium text-blue-600">
+                                        1
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        2
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        3
+                                    </a>
+                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                        ...
+                                    </span>
+                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        8
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Próximo</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add/Edit Book Modal -->
+    <div id="book-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+        
+        <div class="relative bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 modal-container">
+            <div class="absolute top-0 right-0 p-2">
+                <button id="close-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4" id="modal-title">Adicionar Novo Livro</h3>
+                
+                <form id="book-form">
+                    <input type="hidden" id="book-id">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Título*</label>
+                            <input type="text" id="title" name="title" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="author" class="block text-sm font-medium text-gray-700 mb-1">Autor*</label>
+                            <input type="text" id="author" name="author" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="isbn" class="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
+                            <input type="text" id="isbn" name="isbn" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="publisher" class="block text-sm font-medium text-gray-700 mb-1">Editora</label>
+                            <input type="text id="publisher" name="publisher" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Ano de Publicação</label>
+                            <input type="number" id="year" name="year" min="1900" max="2099" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="pages" class="block text-sm font-medium text-gray-700 mb-1">Número de Páginas</label>
+                            <input type="number" id="pages" name="pages" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria*</label>
+                            <select id="category" name="category" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Selecione...</option>
+                                <option value="fiction">Ficção</option>
+                                <option value="romance">Romance</option>
+                                <option value="fantasy">Fantasia</option>
+                                <option value="biography">Biografia</option>
+                                <option value="history">História</option>
+                                <option value="science">Ciência</option>
+                                <option value="technology">Tecnologia</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="language" class="block text-sm font-medium text-gray-700 mb-1">Idioma</label>
+                            <select id="language" name="language" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="portuguese">Português</option>
+                                <option value="english">Inglês</option>
+                                <option value="spanish">Espanhol</option>
+                                <option value="french">Francês</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                        <textarea id="description" name="description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label for="cover" class="block text-sm font-medium text-gray-700 mb-1">Capa do Livro</label>
+                            <input type="file" id="cover" name="cover" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <div id="cover-preview" class="mt-2 hidden">
+                                <img src="" alt="Preview" class="h-32 w-auto rounded shadow">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                            <select id="status" name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="published">Publicado</option>
+                                <option value="pending">Pendente</option>
+                                <option value="rejected">Rejeitado</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" id="cancel-btn" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="gold-gradient hover:bg-amber-600 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                            Salvar Livro
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+        
+        <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4 modal-container">
+            <div class="absolute top-0 right-0 p-2">
+                <button id="close-delete-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="flex items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                        <i class="fas fa-exclamation text-red-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Confirmar Exclusão</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">Tem certeza que deseja excluir o livro <span id="delete-book-title" class="font-medium">Dom Casmurro</span>? Esta ação não pode ser desfeita.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancel-delete-btn" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Cancelar
+                    </button>
+                    <button type="button" id="confirm-delete-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Excluir Livro
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample book data
+        const books = [
+            { 
+                id: 1, 
+                title: 'Dom Casmurro', 
+                author: 'Machado de Assis', 
+                category: 'fiction', 
+                status: 'published', 
+                added: '15/05/2023',
+                rating: 4.5,
+                cover: 'https://m.media-amazon.com/images/I/71QhJQnJw5L._AC_UF1000,1000_QL80_.jpg',
+                description: 'Um clássico da literatura brasileira que explora temas como ciúme, traição e ambiguidade.',
+                isbn: '9788535910663',
+                publisher: 'Companhia das Letras',
+                year: 1899,
+                pages: 256,
+                language: 'portuguese'
+            },
+            { 
+                id: 2, 
+                title: '1984', 
+                author: 'George Orwell', 
+                category: 'fiction', 
+                status: 'published', 
+                added: '20/04/2023',
+                rating: 4.8,
+                cover: 'https://m.media-amazon.com/images/I/71kxa1-0mfL._AC_UF1000,1000_QL80_.jpg',
+                description: 'Uma distopia sobre vigilância governamental e controle totalitário.',
+                isbn: '9780451524935',
+                publisher: 'Signet Classics',
+                year: 1949,
+                pages: 328,
+                language: 'english'
+            },
+            { 
+                id: 3, 
+                title: 'O Pequeno Príncipe', 
+                author: 'Antoine de Saint-Exupéry', 
+                category: 'fantasy', 
+                status: 'published', 
+                added: '10/06/2023',
+                rating: 4.9,
+                cover: 'https://m.media-amazon.com/images/I/71PYO4+RsCL._AC_UF1000,1000_QL80_.jpg',
+                description: 'Uma história filosófica para crianças e adultos sobre amizade e amor.',
+                isbn: '9788595081512',
+                publisher: 'Agir',
+                year: 1943,
+                pages: 96,
+                language: 'portuguese'
+            },
+            { 
+                id: 4, 
+                title: 'A Revolução dos Bichos', 
+                author: 'George Orwell', 
+                category: 'fiction', 
+                status: 'pending', 
+                added: '05/03/2023',
+                rating: 4.7,
+                cover: 'https://m.media-amazon.com/images/I/71H4ED-wQ8L._AC_UF1000,1000_QL80_.jpg',
+                description: 'Uma sátira sobre a corrupção do poder e a natureza humana.',
+                isbn: '9788535909551',
+                publisher: 'Companhia das Letras',
+                year: 1945,
+                pages: 152,
+                language: 'portuguese'
+            },
+            { 
+                id: 5, 
+                title: 'O Hobbit', 
+                author: 'J.R.R. Tolkien', 
+                category: 'fantasy', 
+                status: 'published', 
+                added: '12/07/2023',
+                rating: 4.6,
+                cover: 'https://m.media-amazon.com/images/I/710+HcoP38L._AC_UF1000,1000_QL80_.jpg',
+                description: 'A aventura de Bilbo Bolseiro em busca do tesouro guardado pelo dragão Smaug.',
+                isbn: '9788595084742',
+                publisher: 'HarperCollins',
+                year: 1937,
+                pages: 310,
+                language: 'portuguese'
+            },
+            { 
+                id: 6, 
+                title: 'Cem Anos de Solidão', 
+                author: 'Gabriel García Márquez', 
+                category: 'fiction', 
+                status: 'published', 
+                added: '22/02/2023',
+                rating: 4.7,
+                cover: 'https://m.media-amazon.com/images/I/71vlM5PZ3tL._AC_UF1000,1000_QL80_.jpg',
+                description: 'A história da família Buendía e da mítica cidade de Macondo.',
+                isbn: '9788501016074',
+                publisher: 'Record',
+                year: 1967,
+                pages: 448,
+                language: 'portuguese'
+            },
+            { 
+                id: 7, 
+                title: 'O Nome do Vento', 
+                author: 'Patrick Rothfuss', 
+                category: 'fantasy', 
+                status: 'rejected', 
+                added: '18/05/2023',
+                rating: 4.5,
+                cover: 'https://m.media-amazon.com/images/I/91Q5dCjc2KL._AC_UF1000,1000_QL80_.jpg',
+                description: 'A história de Kvothe, um man de lendária habilidade e fama.',
+                isbn: '9788599296578',
+                publisher: 'Arqueiro',
+                year: 2007,
+                pages: 662,
+                language: 'portuguese'
+            },
+            { 
+                id: 8, 
+                title: 'Sapiens: Uma Breve História da Humanidade', 
+                author: 'Yuval Noah Harari', 
+                category: 'history', 
+                status: 'published', 
+                added: '30/01/2023',
+                rating: 4.6,
+                cover: 'https://m.media-amazon.com/images/I/81XSN3hA5gL._AC_UF1000,1000_QL80_.jpg',
+                description: 'Uma exploração da história da espécie humana desde a evolução até os dias atuais.',
+                isbn: '9788525432183',
+                publisher: 'L&PM',
+                year: 2011,
+                pages: 464,
+                language: 'portuguese'
+            },
+            { 
+                id: 9, 
+                title: 'O Poder do Hábito', 
+                author: 'Charles Duhigg', 
+                category: 'science', 
+                status: 'published', 
+                added: '08/04/2023',
+                rating: 4.2,
+                cover: 'https://m.media-amazon.com/images/I/71e8Qy2XkRL._AC_UF1000,1000_QL80_.jpg',
+                description: 'Como os hábitos funcionam e como podemos transformá-los.',
+                isbn: '9788539004119',
+                publisher: 'Objetiva',
+                year: 2012,
+                pages: 408,
+                language: 'portuguese'
+            },
+            { 
+                id: 10, 
+                title: 'O Homem Mais Rico da Babilônia', 
+                author: 'George S. Clason', 
+                category: 'biography', 
+                status: 'published', 
+                added: '25/03/2023',
+                rating: 4.3,
+                cover: 'https://m.media-amazon.com/images/I/71gZYRwj5ZL._AC_UF1000,1000_QL80_.jpg',
+                description: 'Conselhos sobre finanças pessoais através de parábolas da antiga Babilônia.',
+                isbn: '9788595081536',
+                publisher: 'Edipro',
+                year: 1926,
+                pages: 160,
+                language: 'portuguese'
+            }
+        ];
+
+        // DOM Elements
+        const booksTableBody = document.getElementById('books-table-body');
+        const bookModal = document.getElementById('book-modal');
+        const deleteModal = document.getElementById('delete-modal');
+        const addBookBtn = document.getElementById('add-book-btn');
+        const closeModalBtn = document.getElementById('close-modal');
+        const closeDeleteModalBtn = document.getElementById('close-delete-modal');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const bookForm = document.getElementById('book-form');
+        const modalTitle = document.getElementById('modal-title');
+        const deleteBookTitle = document.getElementById('delete-book-title');
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const coverInput = document.getElementById('cover');
+        const coverPreview = document.getElementById('cover-preview');
+
+        // Variables
+        let currentBookId = null;
+        let isEditMode = false;
+
+        // Initialize the app
+        function init() {
+            renderBooksTable();
+            setupEventListeners();
+        }
+
+        // Render books table
+        function renderBooksTable() {
+            booksTableBody.innerHTML = '';
+            
+            books.forEach(book => {
+                const row = document.createElement('tr');
+                row.className = 'table-row-hover';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <input type="checkbox" class="h-4 w-4 text-blue-600 rounded">
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                                <img class="h-10 w-10 rounded book-cover" src="${book.cover}" alt="${book.title}">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${book.title}</div>
+                                <div class="text-sm text-gray-500">ID: ${book.id}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${book.author}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getCategoryBadgeClass(book.category)}">
+                            ${getCategoryText(book.category)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(book.status)}">
+                            ${getStatusText(book.status)}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${book.added}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <span class="text-yellow-500 mr-1">${book.rating}</span>
+                            <i class="fas fa-star text-yellow-400"></i>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button class="text-blue-600 hover:text-blue-900 mr-3 edit-btn" data-id="${book.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="text-red-600 hover:text-red-900 delete-btn" data-id="${book.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+                booksTableBody.appendChild(row);
+            });
+
+            // Update pagination info
+            document.getElementById('pagination-from').textContent = '1';
+            document.getElementById('pagination-to').textContent = books.length;
+            document.getElementById('pagination-total').textContent = '50';
+        }
+
+        // Get badge class based on book category
+        function getCategoryBadgeClass(category) {
+            switch(category) {
+                case 'fiction': return 'bg-purple-100 text-purple-800';
+                case 'romance': return 'bg-pink-100 text-pink-800';
+                case 'fantasy': return 'bg-indigo-100 text-indigo-800';
+                case 'biography': return 'bg-blue-100 text-blue-800';
+                case 'history': return 'bg-yellow-100 text-yellow-800';
+                case 'science': return 'bg-green-100 text-green-800';
+                case 'technology': return 'bg-teal-100 text-teal-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        // Get category text
+        function getCategoryText(category) {
+            switch(category) {
+                case 'fiction': return 'Ficção';
+                case 'romance': return 'Romance';
+                case 'fantasy': return 'Fantasia';
+                case 'biography': return 'Biografia';
+                case 'history': return 'História';
+                case 'science': return 'Ciência';
+                case 'technology': return 'Tecnologia';
+                default: return category;
+            }
+        }
+
+        // Get badge class based on book status
+        function getStatusBadgeClass(status) {
+            switch(status) {
+                case 'published': return 'bg-green-100 text-green-800';
+                case 'pending': return 'bg-yellow-100 text-yellow-800';
+                default: return 'bg-red-100 text-red-800';
+            }
+        }
+
+        // Get status text
+        function getStatusText(status) {
+            switch(status) {
+                case 'published': return 'Publicado';
+                case 'pending': return 'Pendente';
+                default: return 'Rejeitado';
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileSidebar.classList.remove('-translate-x-full');
+            });
+
+            closeMenuBtn.addEventListener('click', () => {
+                mobileSidebar.classList.add('-translate-x-full');
+            });
+
+            // Modals
+            addBookBtn.addEventListener('click', openAddBookModal);
+            closeModalBtn.addEventListener('click', closeBookModal);
+            cancelBtn.addEventListener('click', closeBookModal);
+            closeDeleteModalBtn.addEventListener('click', closeDeleteModal);
+            cancelDeleteBtn.addEventListener('click', closeDeleteModal);
+
+            // Edit buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-btn') || e.target.parentElement.classList.contains('edit-btn')) {
+                    const btn = e.target.classList.contains('edit-btn') ? e.target : e.target.parentElement;
+                    const bookId = parseInt(btn.getAttribute('data-id'));
+                    openEditBookModal(bookId);
+                }
+                
+                if (e.target.classList.contains('delete-btn') || e.target.parentElement.classList.contains('delete-btn')) {
+                    const btn = e.target.classList.contains('delete-btn') ? e.target : e.target.parentElement;
+                    const bookId = parseInt(btn.getAttribute('data-id'));
+                    openDeleteModal(bookId);
+                }
+            });
+
+            // Form submission
+            bookForm.addEventListener('submit', handleFormSubmit);
+
+            // Delete confirmation
+            confirmDeleteBtn.addEventListener('click', handleDeleteBook);
+
+            // Cover image preview
+            coverInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        coverPreview.querySelector('img').src = event.target.result;
+                        coverPreview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Open add book modal
+        function openAddBookModal() {
+            isEditMode = false;
+            modalTitle.textContent = 'Adicionar Novo Livro';
+            document.getElementById('book-id').value = '';
+            document.getElementById('title').value = '';
+            document.getElementById('author').value = '';
+            document.getElementById('isbn').value = '';
+            document.getElementById('publisher').value = '';
+            document.getElementById('year').value = '';
+            document.getElementById('pages').value = '';
+            document.getElementById('category').value = '';
+            document.getElementById('language').value = 'portuguese';
+            document.getElementById('description').value = '';
+            document.getElementById('status').value = 'published';
+            coverInput.value = '';
+            coverPreview.classList.add('hidden');
+            openBookModal();
+        }
+
+        // Open edit book modal
+        function openEditBookModal(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
+
+            isEditMode = true;
+            currentBookId = bookId;
+            modalTitle.textContent = 'Editar Livro';
+            document.getElementById('book-id').value = book.id;
+            document.getElementById('title').value = book.title;
+            document.getElementById('author').value = book.author;
+            document.getElementById('isbn').value = book.isbn;
+            document.getElementById('publisher').value = book.publisher;
+            document.getElementById('year').value = book.year;
+            document.getElementById('pages').value = book.pages;
+            document.getElementById('category').value = book.category;
+            document.getElementById('language').value = book.language;
+            document.getElementById('description').value = book.description;
+            document.getElementById('status').value = book.status;
+            coverInput.value = '';
+            
+            // Set cover preview if exists
+            if (book.cover) {
+                coverPreview.querySelector('img').src = book.cover;
+                coverPreview.classList.remove('hidden');
+            } else {
+                coverPreview.classList.add('hidden');
+            }
+            
+            openBookModal();
+        }
+
+        // Open book modal
+        function openBookModal() {
+            bookModal.classList.remove('hidden');
+            setTimeout(() => {
+                bookModal.querySelector('.modal-container').classList.add('opacity-100', 'translate-y-0');
+            }, 10);
+        }
+
+        // Close book modal
+        function closeBookModal() {
+            bookModal.querySelector('.modal-container').classList.remove('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                bookModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Open delete modal
+        function openDeleteModal(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
+
+            currentBookId = bookId;
+            deleteBookTitle.textContent = book.title;
+            
+            deleteModal.classList.remove('hidden');
+            setTimeout(() => {
+                deleteModal.querySelector('.modal-container').classList.add('opacity-100', 'translate-y-0');
+            }, 10);
+        }
+
+        // Close delete modal
+        function closeDeleteModal() {
+            deleteModal.querySelector('.modal-container').classList.remove('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                deleteModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Handle form submission
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('title').value;
+            const author = document.getElementById('author').value;
+            const isbn = document.getElementById('isbn').value;
+            const publisher = document.getElementById('publisher').value;
+            const year = document.getElementById('year').value;
+            const pages = document.getElementById('pages').value;
+            const category = document.getElementById('category').value;
+            const language = document.getElementById('language').value;
+            const description = document.getElementById('description').value;
+            const status = document.getElementById('status').value;
+            const coverFile = coverInput.files[0];
+            
+            // In a real app, you would send this data to a server
+            console.log('Form submitted:', { 
+                title, author, isbn, publisher, year, pages, 
+                category, language, description, status, coverFile 
+            });
+            
+            // Simulate saving
+            setTimeout(() => {
+                alert(isEditMode ? 'Livro atualizado com sucesso!' : 'Livro adicionado com sucesso!');
+                closeBookModal();
+                
+                // In a real app, you would update the table after server response
+                if (isEditMode) {
+                    // Update book in the table
+                    const index = books.findIndex(b => b.id === currentBookId);
+                    if (index !== -1) {
+                        books[index] = { 
+                            ...books[index], 
+                            title, author, isbn, publisher, year: parseInt(year), 
+                            pages: parseInt(pages), category, language, description, status 
+                        };
+                        if (coverFile) {
+                            // In a real app, you would upload the image and get the URL
+                            books[index].cover = URL.createObjectURL(coverFile);
+                        }
+                        renderBooksTable();
+                    }
+                } else {
+                    // Add new book to the table
+                    const newId = books.length > 0 ? Math.max(...books.map(b => b.id)) + 1 : 1;
+                    const newBook = {
+                        id: newId,
+                        title,
+                        author,
+                        category,
+                        status,
+                        added: new Date().toLocaleDateString('pt-BR'),
+                        rating: (Math.random() * 1 + 4).toFixed(1),
+                        cover: coverFile ? URL.createObjectURL(coverFile) : 'https://via.placeholder.com/150',
+                        description,
+                        isbn,
+                        publisher,
+                        year: parseInt(year),
+                        pages: parseInt(pages),
+                        language
+                    };
+                    books.unshift(newBook);
+                    renderBooksTable();
+                }
+            }, 500);
+        }
+
+        // Handle delete book
+        function handleDeleteBook() {
+            // Find the index of the book to delete
+            const index = books.findIndex(book => book.id === currentBookId);
+            
+            if (index !== -1) {
+                // Remove the book from the array
+                books.splice(index, 1);
+                
+                // Close the delete modal
+                closeDeleteModal();
+                
+                // Show success message
+                alert('Livro excluído com sucesso!');
+                
+                // Update the table
+                renderBooksTable();
+            } else {
+                alert('Livro não encontrado!');
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</main>
