@@ -250,7 +250,6 @@ C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\B
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\Bookshelf.RazorAssemblyInfo.cs
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\Bookshelf.sourcelink.json
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\scopedcss\bundle\Bookshelf.styles.css
-C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\compressed\s5bv6pcqqa-34okgcs00z.gz
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -266,3 +265,4 @@ C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\r
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\Bookshelf.pdb
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\Bookshelf.genruntimeconfig.cache
 C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\ref\Bookshelf.dll
+C:\Users\guilh\OneDrive\Área de Trabalho\BookShelf\Bookshelf\obj\Debug\net9.0\compressed\s5bv6pcqqa-p8qxw4w6f5.gz

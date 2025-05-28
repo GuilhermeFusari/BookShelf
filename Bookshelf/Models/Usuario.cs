@@ -33,7 +33,6 @@ namespace Bookshelf.Models
 
         [NotMapped]
         [Required(ErrorMessage = "Você deve aceitar os termos.")]
-        [Range(typeof(bool), "true", "true", ErrorMessage = "Você deve aceitar os termos.")]
         public bool Termos { get; set; } = false;
 
         public List<Comunidade> ComunidadesCriadas { get; set; } = new();

@@ -1,4 +1,4 @@
-@model Bookshelf.Models.Usuario
+@model Bookshelf.Models.ViewModels.HomeIndexViewModel
 
 @{
     Layout="~/Views/Shared/_Layout.cshtml";
@@ -8,8 +8,8 @@
 }
 
 <div class="flex min-h-screen">
-    <!-- Sidebar Menu -->
-    <div class="fixed top-0 left-0 w-48 h-screen bg-blue-800 text-white p-4 hidden md:block">
+    <!-- Sidebar Menu (apenas desktop) -->
+    <div class="fixed top-0 left-0 w-48 h-screen bg-blue-800 text-white p-4">
         <div class="pt-2">
             <div class="flex items-center space-x-2 mb-8 mt-[-4px]">
                 <div class="gold-gradient p-2 rounded-lg -mt-[2px]">
@@ -97,24 +97,10 @@
         </div>
     </div>
 
-
     <!-- Main Content -->
-<div class="flex-1 md:ml-48">
-        <!-- Mobile Header -->
-        <header class="bg-blue-800 text-blue-50 p-3 flex items-center justify-between md:hidden">
-            <div class="flex items-center space-x-2">
-                <div class="gold-gradient p-1 rounded-md">
-                    <i class="fas fa-book-open text-base text-white"></i>
-                </div>
-                <h1 class="text-lg font-bold">BookShelf</h1>
-            </div>
-            <button id="menu-toggle" class="text-xl">
-                <i class="fas fa-bars"></i>
-            </button>
-        </header>
-
+    <div class="flex-1 md:ml-48">
         <!-- Desktop Header -->
-        <header class="bg-blue-800 text-blue-50 p-4 hidden md:flex justify-between items-center">
+        <header class="bg-blue-800 text-blue-50 p-4 flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <!-- Search Bar -->
                 <div class="relative">
@@ -123,118 +109,24 @@
                     <i class="fas fa-search absolute left-3 top-3 text-blue-200"></i>
                 </div>
             </div>
-                
-            <div class="flex space-x-3">
-                <a href="/Livro/Gerenciamento" class="auth-btn gold-gradient text-white px-4 py-1 rounded-full font-medium transition text-scale-90">
-                Gerenciar Livros
-                </a>
-                <a href="/Usuario/Login" class="auth-buttons border border-blue-200 hover:border-amber-300 text-blue-50 hover:text-amber-300 px-4 py-1 rounded-full font-medium transition text-scale-90">
-                    Login
-                </a>
-                <a href="/Usuario/Registrar" class="auth-btn gold-gradient text-white px-4 py-1 rounded-full font-medium transition text-scale-90">
-                Cadastre-se
-                </a>
-
+            <div class="flex gap-2 items-center">
+                @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Administrador"))
+                {
+                    <a href="/Livro/Gerenciamento" class="auth-btn gold-gradient text-white px-4 py-1 rounded-full font-medium transition text-scale-90 shadow">
+                        Gerenciar Livros
+                    </a>
+                }
+                @if (!(User.Identity?.IsAuthenticated ?? false))
+                {
+                    <a href="/Usuario/Login" class="auth-buttons border border-blue-200 hover:border-amber-300 text-blue-50 hover:text-amber-300 px-4 py-1 rounded-full font-medium transition text-scale-90">
+                        Login
+                    </a>
+                    <a href="/Usuario/Registrar" class="auth-btn gold-gradient text-white px-4 py-1 rounded-full font-medium transition text-scale-90">
+                        Cadastre-se
+                    </a>
+                }
             </div>
         </header>
-
-        <!-- Mobile Sidebar (hidden by default) -->
-        <div id="mobile-sidebar" class="fixed inset-0 bg-blue-800 text-blue-50 z-50 p-4 transform -translate-x-full transition-transform md:hidden">
-            <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center space-x-2">
-                    <div class="gold-gradient p-2 rounded-lg">
-                        <i class="fas fa-book-open text-xl text-white"></i>
-                    </div>
-                    <h1 class="text-xl font-bold">BookShelf</h1>
-                </div>
-                <button id="close-menu" class="text-2xl">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <!-- Mobile Search -->
-            <div class="mb-4 relative">
-                <input type="text" placeholder="Pesquisar livros..." 
-                       class="w-full bg-blue-700 text-blue-50 placeholder-blue-200 rounded-full py-2 px-4 pl-10 focus:outline-none focus:ring-2 focus:ring-amber-300">
-                <i class="fas fa-search absolute left-3 top-3 text-blue-200"></i>
-            </div>
-            
-            <div class="mb-8">
-                <h2 class="text-base font-semibold mb-3 gold-text">Menu</h2>
-                <ul class="space-y-3">
-                    <li><a href="#" class="flex items-center space-x-3 hover:text-amber-300 transition p-2 text-scale-90">
-                        <i class="fas fa-home w-4"></i>
-                        <span>Início</span>
-                    </a></li>
-                    <li><a href="#" class="flex items-center space-x-3 hover:text-amber-300 transition p-2 text-scale-90">
-                        <i class="fas fa-compass w-4"></i>
-                        <span>Explorar</span>
-                    </a></li>
-                    <li><a href="#" class="flex items-center space-x-3 hover:text-amber-300 transition p-2 text-scale-90">
-                        <i class="fas fa-bookmark w-4"></i>
-                        <span>Minha Estante</span>
-                    </a></li>
-                    <li><a href="#" class="flex items-center space-x-3 hover:text-amber-300 transition p-2 text-scale-90">
-                        <i class="fas fa-calendar-alt w-4"></i>
-                        <span>Diário</span>
-                    </a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h2 class="text-base font-semibold mb-3 gold-text">Gêneros</h2>
-                <div class="grid grid-cols-3 gap-2">
-                    <a href="#" class="genre-icon bg-blue-600 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-mountain text-base mb-1"></i>
-                        <span>Aventura</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-pink-600 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-heart text-base mb-1"></i>
-                        <span>Romance</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-purple-800 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-ghost text-base mb-1"></i>
-                        <span>Terror</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-indigo-600 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-dragon text-base mb-1"></i>
-                        <span>Fantasia</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-gray-700 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-question text-base mb-1"></i>
-                        <span>Suspense</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-yellow-700 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-pray text-base mb-1"></i>
-                        <span>Religioso</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-blue-700 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-briefcase text-base mb-1"></i>
-                        <span>Profissional</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-red-700 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-landmark text-base mb-1"></i>
-                        <span>Política</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-orange-600 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-utensils text-base mb-1"></i>
-                        <span>Culinária</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-teal-600 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-robot text-base mb-1"></i>
-                        <span>Sci-fi</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-red-500 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-child text-base mb-1"></i>
-                        <span>Infantil</span>
-                    </a>
-                    <a href="#" class="genre-icon bg-green-600 text-white p-1 rounded-lg flex flex-col items-center justify-center text-scale-75">
-                        <i class="fas fa-user-graduate text-base mb-1"></i>
-                        <span>Acadêmicos</span>
-                    </a>
-                </div>
-            </div>
-        </div>
 
         <!-- Hero Section -->
         <section class="bg-gradient-to-r from-blue-800 to-green-600 text-blue-50 p-6 md:p-6">
@@ -243,7 +135,6 @@
                     <h1 class="text-2xl md:text-3xl font-bold mb-3 leading-tight">Registre suas leituras com <span class="gold-text">BookShelf</span></h1>
                     <p class="text-base mb-3 leading-normal">Acompanhe os livros que você leu, salve os que quer ler e descubra novas histórias.</p>
                     <div class="flex space-x-2">
-                        </button>
                         <button class="border border-blue-50 hover:bg-blue-700 text-blue-50 px-4 py-2 rounded-full font-medium transition text-scale-90">
                             Saiba mais
                         </button>
@@ -257,7 +148,6 @@
             </div>
         </section>
 
-        <!-- Trending Books -->
         <section class="p-4 md:p-6">
             <div class="max-w-6xl mx-auto">
                 <div class="flex justify-between items-center mb-4">
@@ -267,223 +157,63 @@
                         </div>
                         Livros em alta
                     </h2>
-                    <a href="#" class="text-blue-700 hover:text-blue-900 font-medium text-scale-90">Ver todos</a>
+                    <a href="/Livro/Gerenciamento" class="text-blue-700 hover:text-blue-900 font-medium text-scale-90">Ver todos</a>
                 </div>
-                
+
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                    <!-- Book Cards -->
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <img src="https://images.unsplash.com/photo-1544947950-2a7e5d7f06e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Capa do livro" 
-                             class="w-full h-32 sm:h-36 object-cover">
-                        <div class="p-2">
-                            <h3 class="font-semibold text-blue-900 truncate text-scale-90">Aventuras na Floresta</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star-half-alt text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(128)</span>
+                   @foreach (var livro in Model.Livros)
+                    {
+                        <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
+                            <img src="@livro.CapaUrl" alt="Capa do livro" class="w-full h-32 sm:h-36 object-cover">
+                            <div class="p-2">
+                                <h3 class="font-semibold text-blue-900 truncate text-scale-90">@livro.Titulo</h3>
+                                <p class="text-xs text-gray-600 mb-1">@livro.Autor</p>
+                                <div class="flex items-center text-amber-400">
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="far fa-star text-xs"></i>
+                                    <span class="text-xs text-gray-600 ml-1">(0)</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Capa do livro" 
-                             class="w-full h-32 sm:h-36 object-cover">
-                        <div class="p-2">
-                            <h3 class="font-semibold text-blue-900 truncate text-scale-90">O Mistério do Castelo</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="far fa-star text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(95)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Capa do livro" 
-                             class="w-full h-32 sm:h-36 object-cover">
-                        <div class="p-2">
-                            <h3 class="font-semibold text-blue-900 truncate text-scale-90">Poemas do Coração</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(210)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <img src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Capa do livro" 
-                             class="w-full h-32 sm:h-36 object-cover">
-                        <div class="p-2">
-                            <h3 class="font-semibold text-blue-900 truncate text-scale-90">O Dragão de Ouro</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star-half-alt text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(176)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <img src="https://images.unsplash.com/photo-1629992101753-56d196c7a4dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                             alt="Capa do livro" 
-                             class="w-full h-32 sm:h-36 object-cover">
-                        <div class="p-2">
-                            <h3 class="font-semibold text-blue-900 truncate text-scale-90">O Segredo do Sucesso</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="far fa-star text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(143)</span>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </section>
-
         <!-- New Releases -->
-        <section class="bg-green-50 p-4 md:p-6">
+        <section class="p-4 md:p-6">
             <div class="max-w-6xl mx-auto">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-green-900 flex items-center">
+                    <h2 class="text-xl font-bold text-blue-900 flex items-center">
                         <div class="gold-gradient p-1 rounded-md mr-2">
-                            <i class="fas fa-star text-white text-xs"></i>
+                            <i class="fas fa-fire text-white text-xs"></i>
                         </div>
                         Lançamentos
                     </h2>
-                    <a href="#" class="text-green-700 hover:text-green-900 font-medium text-scale-90">Ver todos</a>
+                    <a href="/Livro/Gerenciamento" class="text-blue-700 hover:text-blue-900 font-medium text-scale-90">Ver todos</a>
                 </div>
-                
+
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                    <!-- Book Cards -->
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1544947950-2a7e5d7f06e5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Capa do livro" 
-                                 class="w-full h-32 sm:h-36 object-cover">
-                            <span class="absolute top-1 right-1 bg-amber-500 text-white text-xs font-bold px-1 py-0.5 rounded-full">NOVO</span>
-                        </div>
-                        <div class="p-2">
-                            <h3 class="font-semibold text-green-900 truncate text-scale-90">Aventuras na Floresta</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star-half-alt text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(128)</span>
+                   @foreach (var livro in Model.Livros)
+                    {
+                        <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
+                            <img src="@livro.CapaUrl" alt="Capa do livro" class="w-full h-32 sm:h-36 object-cover">
+                            <div class="p-2">
+                                <h3 class="font-semibold text-blue-900 truncate text-scale-90">@livro.Titulo</h3>
+                                <p class="text-xs text-gray-600 mb-1">@livro.Autor</p>
+                                <div class="flex items-center text-amber-400">
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="far fa-star text-xs"></i>
+                                    <span class="text-xs text-gray-600 ml-1">(0)</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1589998059171-988d887df646?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Capa do livro" 
-                                 class="w-full h-32 sm:h-36 object-cover">
-                            <span class="absolute top-1 right-1 bg-amber-500 text-white text-xs font-bold px-1 py-0.5 rounded-full">NOVO</span>
-                        </div>
-                        <div class="p-2">
-                            <h3 class="font-semibold text-green-900 truncate text-scale-90">O Mistério do Castelo</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="far fa-star text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(95)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Capa do livro" 
-                                 class="w-full h-32 sm:h-36 object-cover">
-                            <span class="absolute top-1 right-1 bg-amber-500 text-white text-xs font-bold px-1 py-0.5 rounded-full">NOVO</span>
-                        </div>
-                        <div class="p-2">
-                            <h3 class="font-semibold text-green-900 truncate text-scale-90">Poemas do Coração</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(210)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Capa do livro" 
-                                 class="w-full h-32 sm:h-36 object-cover">
-                            <span class="absolute top-1 right-1 bg-amber-500 text-white text-xs font-bold px-1 py-0.5 rounded-full">NOVO</span>
-                        </div>
-                        <div class="p-2">
-                            <h3 class="font-semibold text-green-900 truncate text-scale-90">O Dragão de Ouro</h3>
-                            <p class="text-xs text-gray-60 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star-half-alt text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(176)</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="book-card bg-white rounded-lg overflow-hidden scale-95 hover:scale-100">
-                        <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1629992101753-56d196c7a4dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Capa do livro" 
-                                 class="w-full h-32 sm:h-36 object-cover">
-                            <span class="absolute top-1 right-1 bg-amber-500 text-white text-xs font-bold px-1 py-0.5 rounded-full">NOVO</span>
-                        </div>
-                        <div class="p-2">
-                            <h3 class="font-semibold text-green-900 truncate text-scale-90">O Segredo do Sucesso</h3>
-                            <p class="text-xs text-gray-600 mb-1">Autor Desconhecido</p>
-                            <div class="flex items-center text-amber-400">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="far fa-star text-xs"></i>
-                                <span class="text-xs text-gray-600 ml-1">(143)</span>
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </section>

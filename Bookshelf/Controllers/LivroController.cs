@@ -2,18 +2,24 @@ using Microsoft.AspNetCore.Mvc;
 using Bookshelf.Models;
 using Bookshelf.Db;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bookshelf.Controllers
 {
+    // Este controller é responsável pelo CRUD de livros.
+    // Apenas usuários com a role "Administrador" podem acessar as actions deste controller.
+    [Authorize(Roles = "Administrador")]
     public class LivroController : Controller
     {
         private readonly AppDbContext _context;
 
+        // Construtor que recebe o contexto do banco de dados via injeção de dependência.
         public LivroController(AppDbContext context)
         {
             _context = context;
         }
 
+        // Exibe a lista de livros cadastrados.
         [HttpGet]
         public IActionResult Gerenciamento()
         {
@@ -21,12 +27,14 @@ namespace Bookshelf.Controllers
             return View(livros); 
         }
 
+        // Exibe o formulário para cadastrar um novo livro.
         [HttpGet]
         public IActionResult RegistroLivro()
         {
             return View();
         }
 
+        // Salva um novo livro no banco de dados.
         [HttpPost]
         public IActionResult RegistroLivro(Livro livro)
         {
@@ -36,6 +44,8 @@ namespace Bookshelf.Controllers
             TempData["MensagemSucesso"] = "Livro cadastrado com sucesso!";
             return RedirectToAction("Gerenciamento");
         }
+
+        // Exibe o formulário para editar um livro existente.
         [HttpGet]
         public IActionResult Editar(int id)
         {
@@ -46,6 +56,7 @@ namespace Bookshelf.Controllers
             return View(livro); 
         }
 
+        // Salva as alterações feitas em um livro existente.
         [HttpPost]
         public IActionResult Editar(Livro livro)
         {
@@ -63,10 +74,10 @@ namespace Bookshelf.Controllers
 
             _context.SaveChanges();
 
-
             return RedirectToAction("Gerenciamento");
         }
 
+        // Remove um livro do banco de dados.
         [HttpGet]
         public IActionResult Excluir(int id)
         {

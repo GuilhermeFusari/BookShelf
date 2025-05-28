@@ -11,8 +11,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.LoginPath = "/Usuario/Login";
-        options.LogoutPath = "/Usuario/Logout";
         options.ExpireTimeSpan = TimeSpan.FromHours(1);
+        options.AccessDeniedPath = "/Home/Index";
     });
 
 builder.Services.AddControllersWithViews();
@@ -24,7 +24,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();  // <== importante, vem antes do UseAuthorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

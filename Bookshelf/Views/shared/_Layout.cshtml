@@ -12,31 +12,59 @@
     <header class="bg-blue-800 text-blue-50 p-4">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                @if (ViewData["HideLogo"] as bool? != true){
                 <div class="gold-gradient p-2 rounded-lg">
-                    
                     <i class="fas fa-book-open text-xl"></i>
                 </div>
-                
+                            @if (ViewData["HideLogo"] as bool? != true){
                 <a href="/" class="text-xl font-bold cursor-pointer">BookShelf</a>
                 }
             </div>
-            <a href="/" asp-controller="Home" asp-action="Index" class="hover:text-amber-300 transition cursor-pointer">
-                Voltar ao site
-            </a>
-        </div>
+
+            <div class="flex items-center space-x-4 pr-6">
+                @if (!(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index"))
+                {
+                <a href="@Url.Action("Index", "Home")"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-semibold shadow transition">
+                    Início
+                </a>
+                }
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <span class="font-semibold text-white">Olá, @User.Identity.Name!</span>
+
+
+                    <a href="/Usuario/Perfil"
+                    class="bg-white text-blue-800 hover:bg-amber-300 hover:text-white px-4 py-2 rounded-full font-semibold shadow transition">
+                        Perfil
+                    </a>
+
+                    <form action="/Usuario/Logout" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit"
+                                class="bg-red-600 hover:bg-red-700 text-white w-12 h-12 rounded-full shadow flex items-center justify-center transition"
+                                title="Sair">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                }
+                </div>
+
+            </div>
+
+    </div>
     </header>
 
-    <main class="flex-grow flex items-center justify-center p-4">
-        <div class="@ViewData["MainContainerClass"]">
-            @RenderBody()
-        </div>
-    </main>
+    <main class="flex-grow flex flex-col justify-between p-4">
+    <div class="@ViewData["MainContainerClass"]">
+        @RenderBody()
+    </div>
+</main>
 
     <footer class="bg-blue-800 text-blue-50 p-4 text-center">
         &copy; @DateTime.Now.Year - BookShelf
     </footer>
 
     @RenderSection("Scripts", required: false)
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>

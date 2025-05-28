@@ -1,4 +1,3 @@
-
 /* Sidebar scrollbar */
 .sidebar {
     scrollbar-width: thin;
@@ -156,5 +155,19 @@
 }
 .floating {
     animation: float 4s ease-in-out infinite;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
