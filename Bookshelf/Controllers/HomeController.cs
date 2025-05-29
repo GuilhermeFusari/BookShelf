@@ -23,21 +23,33 @@ namespace Bookshelf.Controllers
             // Obtém o email do usuário autenticado (se houver)
             var email = User.Identity?.Name;
 
-            Usuario usuario = null; // Inicializa o objeto usuário como nulo
+            Usuario usuario = null;
             if (email != null)
             {
-                // Busca o usuário no banco de dados pelo email
                 usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
             }
 
-            // Obtém todos os livros cadastrados no banco de dados
-            var livros = _context.Livros.ToList();
+            // Obtém todos os livros cadastrados no banco de dados e calcula a média de notas e total de avaliações
+            var livros = _context.Livros
+                .Select(livro => new LivroViewModel
+                {
+                    Id = livro.Id,
+                    Titulo = livro.Titulo,
+                    Autor = livro.Autor,
+                    CapaUrl = livro.CapaUrl,
+                    MediaNotas = _context.Avaliacoes
+                        .Where(a => a.LivroId == livro.Id)
+                        .Average(a => (double?)a.Nota) ?? 0, // Calcula a média ou retorna 0 se não houver avaliações
+                    TotalAvaliacoes = _context.Avaliacoes
+                        .Count(a => a.LivroId == livro.Id) // Conta o total de avaliações para o livro
+                })
+                .ToList();
 
             // Cria o ViewModel para passar os dados para a view
             var viewModel = new HomeIndexViewModel
             {
-                Usuario = usuario, // Usuário autenticado (se houver)
-                Livros = livros // Lista de livros
+                Usuario = usuario,
+                Livros = livros
             };
 
             // Retorna a view com o ViewModel

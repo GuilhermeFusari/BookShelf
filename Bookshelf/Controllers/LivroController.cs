@@ -4,6 +4,7 @@ using Bookshelf.Db;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Bookshelf.Models.ViewModels;
+using System.Security.Claims;
 
 namespace Bookshelf.Controllers
 {
@@ -191,6 +192,155 @@ namespace Bookshelf.Controllers
             }
 
             return RedirectToAction("Detalhes", new { id = livroId });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult MeusLivros()
+        {
+            // Obtém o e-mail do usuário autenticado
+            var email = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            // Busca os livros adicionados à lista "Para Ler Depois" do usuário
+            var livrosNaLista = _context.LivrosNaLista
+                .Where(ll => ll.ListaLivro.UsuarioId == usuario.Id)
+                .Select(ll => new
+                {
+                    Livro = ll.Livro,
+                    Avaliacao = _context.Avaliacoes.FirstOrDefault(a => a.UsuarioId == usuario.Id && a.LivroId == ll.LivroId)
+                })
+                .ToList();
+
+            // Cria o ViewModel para passar os dados para a view
+            var viewModel = livrosNaLista.Select(l => new LivroComAvaliacaoViewModel
+            {
+                LivroId = l.Livro.Id,
+                Titulo = l.Livro.Titulo,
+                Autor = l.Livro.Autor,
+                CapaUrl = l.Livro.CapaUrl,
+                Avaliacao = l.Avaliacao != null ? new AvaliacaoViewModel
+                {
+                    Nota = l.Avaliacao.Nota,
+                    Comentario = l.Avaliacao.Comentario
+                } : null
+            }).ToList();
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Avaliar(int livroId)
+        {
+            var livro = _context.Livros.FirstOrDefault(l => l.Id == livroId);
+            if (livro == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new AvaliacaoViewModel
+            {
+                Nota = 0,
+                Comentario = string.Empty,
+                Status = "Quero Ler" // Valor padrão
+            };
+
+            ViewBag.LivroTitulo = livro.Titulo;
+            ViewBag.LivroCapaUrl = livro.CapaUrl; // Certifique-se de que CapaUrl contém a URL correta
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public IActionResult Avaliar(int livroId, AvaliacaoViewModel model)
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            var avaliacao = new Avaliacao
+            {
+                UsuarioId = usuario.Id,
+                LivroId = livroId,
+                Nota = model.Nota,
+                Comentario = model.Comentario,
+                DataAvaliacao = DateTime.Now,
+                Status = "Lido"
+            };
+
+            _context.Avaliacoes.Add(avaliacao);
+            _context.SaveChanges();
+
+            return RedirectToAction("MeusLivros");
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult EditarAvaliacao(int livroId)
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            var avaliacao = _context.Avaliacoes.FirstOrDefault(a => a.UsuarioId == usuario.Id && a.LivroId == livroId);
+            if (avaliacao == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new AvaliacaoViewModel
+            {
+                Nota = avaliacao.Nota,
+                Comentario = avaliacao.Comentario,
+                Status = avaliacao.Status // Certifique-se de que a propriedade Status existe no modelo Avaliacao
+            };
+
+            var livro = _context.Livros.FirstOrDefault(l => l.Id == livroId);
+            ViewBag.LivroTitulo = livro?.Titulo;
+            ViewBag.LivroCapaUrl = livro?.CapaUrl; // Certifique-se de que CapaUrl contém a URL correta
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditarAvaliacao(int livroId, AvaliacaoViewModel model)
+        {
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            var avaliacao = _context.Avaliacoes.FirstOrDefault(a => a.UsuarioId == usuario.Id && a.LivroId == livroId);
+            if (avaliacao == null)
+            {
+                return NotFound();
+            }
+
+            avaliacao.Nota = model.Nota;
+            avaliacao.Comentario = model.Comentario;
+            _context.SaveChanges();
+
+            return RedirectToAction("MeusLivros");
         }
     }
 }

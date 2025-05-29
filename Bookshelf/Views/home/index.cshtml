@@ -101,12 +101,22 @@
                         <h3 class="font-semibold text-blue-900 truncate text-base">@livro.Titulo</h3>
                         <p class="text-xs text-gray-600 mb-1">@livro.Autor</p>
                         <div class="flex items-center text-amber-400">
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="far fa-star text-xs"></i>
-                            <span class="text-xs text-gray-600 ml-1">(0)</span>
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= Math.Floor(livro.MediaNotas))
+                                {
+                                    <i class="fas fa-star text-xs"></i> <!-- Estrela cheia -->
+                                }
+                                else if (i == Math.Ceiling(livro.MediaNotas) && livro.MediaNotas % 1 != 0)
+                                {
+                                    <i class="fas fa-star-half-alt text-xs"></i> <!-- Meia estrela -->
+                                }
+                                else
+                                {
+                                    <i class="far fa-star text-xs"></i> <!-- Estrela vazia -->
+                                }
+                            }
+                            <span class="text-xs text-gray-600 ml-1">(@livro.TotalAvaliacoes avaliações)</span>
                         </div>
                     </div>
                 </div>
@@ -135,12 +145,22 @@
                     <h3 class="font-semibold text-blue-900 truncate text-base">@livro.Titulo</h3>
                     <p class="text-xs text-gray-600 mb-1">@livro.Autor</p>
                     <div class="flex items-center text-amber-400">
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="fas fa-star text-xs"></i>
-                        <i class="far fa-star text-xs"></i>
-                        <span class="text-xs text-gray-600 ml-1">(0)</span>
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= Math.Floor(livro.MediaNotas))
+                            {
+                                <i class="fas fa-star text-xs"></i> <!-- Estrela cheia -->
+                            }
+                            else if (i == Math.Ceiling(livro.MediaNotas) && livro.MediaNotas % 1 != 0)
+                            {
+                                <i class="fas fa-star-half-alt text-xs"></i> <!-- Meia estrela -->
+                            }
+                            else
+                            {
+                                <i class="far fa-star text-xs"></i> <!-- Estrela vazia -->
+                            }
+                        }
+                        <span class="text-xs text-gray-600 ml-1">(@livro.TotalAvaliacoes avaliações)</span>
                     </div>
                 </div>
             </div>

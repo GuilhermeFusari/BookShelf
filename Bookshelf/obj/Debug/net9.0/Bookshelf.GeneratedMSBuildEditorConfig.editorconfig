@@ -24,6 +24,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcaG9tZVxpbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/guilh/OneDrive/Área de Trabalho/BookShelf/Bookshelf/Views/Livro/Avaliar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cm9cQXZhbGlhci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/guilh/OneDrive/Área de Trabalho/BookShelf/Bookshelf/Views/Livro/Detalhes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cm9cRGV0YWxoZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -32,12 +36,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cm9cRWRpdGFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/guilh/OneDrive/Área de Trabalho/BookShelf/Bookshelf/Views/Livro/EditarAvaliacao.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cm9cRWRpdGFyQXZhbGlhY2FvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/guilh/OneDrive/Área de Trabalho/BookShelf/Bookshelf/Views/Livro/Gerenciamento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cm9cR2VyZW5jaWFtZW50by5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/guilh/OneDrive/Área de Trabalho/BookShelf/Bookshelf/Views/Livro/ListaLivros.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cm9cTGlzdGFMaXZyb3MuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/guilh/OneDrive/Área de Trabalho/BookShelf/Bookshelf/Views/Livro/MeusLivros.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cm9cTWV1c0xpdnJvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/guilh/OneDrive/Área de Trabalho/BookShelf/Bookshelf/Views/Livro/RegistroLivro.cshtml]
