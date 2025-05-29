@@ -8,6 +8,7 @@ using System.Security.Claims;
 using BCrypt.Net;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using Bookshelf.Models.ViewModels; // Adicione esta linha
 
 namespace Bookshelf.Controllers
 {
@@ -159,6 +160,47 @@ namespace Bookshelf.Controllers
             // Define uma mensagem de sucesso e redireciona para a lista de usuários
             TempData["MensagemSucesso"] = "Usuário excluído com sucesso.";
             return RedirectToAction("ListaUsuarios");
+        }
+
+
+        // Exibe a página de Perfil de usuários
+        [HttpGet]
+        [Authorize]
+        public IActionResult Perfil()
+        {
+            // Obtém o email do usuário autenticado
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            // Busca o usuário no banco de dados pelo email
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Erro", "Home");
+            }
+
+            // Conta a quantidade de comunidades associadas ao usuário
+            var quantidadeComunidades = _context.UsuarioComunidades
+                .Count(uc => uc.UsuarioId == usuario.Id);
+
+            // Conta a quantidade de livros na lista do usuário
+            var quantidadeLivros = _context.LivrosNaLista
+                .Count(ll => ll.ListaLivro.UsuarioId == usuario.Id);
+
+            // Cria o ViewModel para passar os dados para a view
+            var viewModel = new PerfilViewModel
+            {
+                Usuario = usuario,
+                QuantidadeComunidades = quantidadeComunidades,
+                QuantidadeLivros = quantidadeLivros
+            };
+
+            return View(viewModel);
         }
     }
 }

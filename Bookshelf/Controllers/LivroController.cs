@@ -3,12 +3,10 @@ using Bookshelf.Models;
 using Bookshelf.Db;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Bookshelf.Models.ViewModels;
 
 namespace Bookshelf.Controllers
 {
-    // Este controller é responsável pelo CRUD de livros.
-    // Apenas usuários com a role "Administrador" podem acessar as actions deste controller.
-    [Authorize(Roles = "Administrador")]
     public class LivroController : Controller
     {
         private readonly AppDbContext _context;
@@ -19,8 +17,10 @@ namespace Bookshelf.Controllers
             _context = context;
         }
 
+        // Actions administrativas
         // Exibe a lista de livros cadastrados.
         [HttpGet]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Gerenciamento()
         {
             var livros = _context.Livros.ToList();
@@ -29,6 +29,7 @@ namespace Bookshelf.Controllers
 
         // Exibe o formulário para cadastrar um novo livro.
         [HttpGet]
+        [Authorize(Roles = "Administrador")]
         public IActionResult RegistroLivro()
         {
             return View();
@@ -36,6 +37,7 @@ namespace Bookshelf.Controllers
 
         // Salva um novo livro no banco de dados.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public IActionResult RegistroLivro(Livro livro)
         {
             _context.Livros.Add(livro);
@@ -47,6 +49,7 @@ namespace Bookshelf.Controllers
 
         // Exibe o formulário para editar um livro existente.
         [HttpGet]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Editar(int id)
         {
             var livro = _context.Livros.FirstOrDefault(l => l.Id == id);
@@ -58,6 +61,7 @@ namespace Bookshelf.Controllers
 
         // Salva as alterações feitas em um livro existente.
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Editar(Livro livro)
         {
             var livroDb = _context.Livros.FirstOrDefault(l => l.Id == livro.Id);
@@ -79,6 +83,7 @@ namespace Bookshelf.Controllers
 
         // Remove um livro do banco de dados.
         [HttpGet]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Excluir(int id)
         {
             var livro = _context.Livros.FirstOrDefault(l => l.Id == id);
@@ -90,6 +95,102 @@ namespace Bookshelf.Controllers
 
             TempData["MensagemSucesso"] = "Livro excluído com sucesso!";
             return RedirectToAction("Gerenciamento");
+        }
+
+        // Actions públicas
+        [HttpGet]
+        [AllowAnonymous] // Permite que qualquer usuário acesse esta página
+        public IActionResult ListaLivros(string? genero, string? autor)
+        {
+            // Busca todos os livros
+            var livros = _context.Livros.AsQueryable();
+
+            // Aplica o filtro por gênero, se fornecido
+            if (!string.IsNullOrEmpty(genero))
+            {
+                livros = livros.Where(l => l.Genero != null && l.Genero.Contains(genero));
+            }
+
+            // Aplica o filtro por autor, se fornecido
+            if (!string.IsNullOrEmpty(autor))
+            {
+                livros = livros.Where(l => l.Autor != null && l.Autor.Contains(autor));
+            }
+
+            // Cria um ViewModel para passar os dados para a view
+            var viewModel = new ListaLivrosViewModel
+            {
+                Livros = livros.ToList(),
+                Generos = _context.Livros
+                    .Where(l => l.Genero != null)
+                    .Select(l => l.Genero!)
+                    .Distinct()
+                    .ToList(),
+                Autores = _context.Livros
+                    .Where(l => l.Autor != null)
+                    .Select(l => l.Autor!)
+                    .Distinct()
+                    .ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Detalhes(int id)
+        {
+            var livro = _context.Livros.FirstOrDefault(l => l.Id == id);
+            if (livro == null)
+                return NotFound();
+
+            return View(livro);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public IActionResult SalvarParaLerDepois(int livroId)
+        {
+            // Obtém o e-mail do usuário autenticado
+            var email = User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value;
+            var usuario = _context.Usuarios.FirstOrDefault(u => u.Email == email);
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Login", "Usuario");
+            }
+
+            // Busca (ou cria) a lista "Para Ler Depois" do usuário
+            var lista = _context.ListaLivros.FirstOrDefault(l => l.UsuarioId == usuario.Id && l.Nome == "Para Ler Depois");
+            if (lista == null)
+            {
+                lista = new ListaLivro
+                {
+                    UsuarioId = usuario.Id,
+                    Nome = "Para Ler Depois",
+                    DataCriacao = DateTime.Now,
+                    Privada = true
+                };
+                _context.ListaLivros.Add(lista);
+                _context.SaveChanges();
+            }
+
+            // Verifica se o livro já está na lista
+            bool jaExiste = _context.LivrosNaLista.Any(x => x.ListaLivroId == lista.Id && x.LivroId == livroId);
+            if (!jaExiste)
+            {
+                // Adiciona o livro na lista
+                _context.LivrosNaLista.Add(new LivroNaLista
+                {
+                    ListaLivroId = lista.Id,
+                    LivroId = livroId,
+                    DataAdicionado = DateTime.Now
+                });
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Detalhes", new { id = livroId });
         }
     }
 }

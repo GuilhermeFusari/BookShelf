@@ -1,16 +1,16 @@
 ﻿<Project>
   <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/Bookshelf/css/site.cdaq87xon9.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"cdaq87xon9"},{"Name":"integrity","Value":"sha256-AEv8xyF07yNxe\u002BMn1UXRoMEQpycG\u002BmV0tNRDA34SSvk="},{"Name":"label","Value":"_content/Bookshelf/css/site.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3752"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022AEv8xyF07yNxe\u002BMn1UXRoMEQpycG\u002BmV0tNRDA34SSvk=\u0022"},{"Name":"Last-Modified","Value":"Thu, 29 May 2025 01:02:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Bookshelf/css/site.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-GTNhK2sfr4pFzPKmMX8rfYmZVO3bkV91wTeHGI5dg2A="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2900"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022GTNhK2sfr4pFzPKmMX8rfYmZVO3bkV91wTeHGI5dg2A=\u0022"},{"Name":"Last-Modified","Value":"Wed, 28 May 2025 01:13:44 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Bookshelf/css/site.p8qxw4w6f5.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"p8qxw4w6f5"},{"Name":"integrity","Value":"sha256-GTNhK2sfr4pFzPKmMX8rfYmZVO3bkV91wTeHGI5dg2A="},{"Name":"label","Value":"_content/Bookshelf/css/site.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2900"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022GTNhK2sfr4pFzPKmMX8rfYmZVO3bkV91wTeHGI5dg2A=\u0022"},{"Name":"Last-Modified","Value":"Wed, 28 May 2025 01:13:44 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-AEv8xyF07yNxe\u002BMn1UXRoMEQpycG\u002BmV0tNRDA34SSvk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3752"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022AEv8xyF07yNxe\u002BMn1UXRoMEQpycG\u002BmV0tNRDA34SSvk=\u0022"},{"Name":"Last-Modified","Value":"Thu, 29 May 2025 01:02:43 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
   </ItemGroup>
 </Project>

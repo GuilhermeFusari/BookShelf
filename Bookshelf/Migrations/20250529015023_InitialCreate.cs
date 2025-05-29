@@ -44,7 +44,7 @@ namespace Bookshelf.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ListasLivros",
+                name: "ListaLivros",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -57,7 +57,7 @@ namespace Bookshelf.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListasLivros", x => x.Id);
+                    table.PrimaryKey("PK_ListaLivros", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,20 +97,6 @@ namespace Bookshelf.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsuarioComunidades",
-                columns: table => new
-                {
-                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComunidadeId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Papel = table.Column<string>(type: "TEXT", nullable: false),
-                    DataEntrada = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsuarioComunidades", x => new { x.UsuarioId, x.ComunidadeId });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
@@ -126,6 +112,32 @@ namespace Bookshelf.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LivrosNaLista",
+                columns: table => new
+                {
+                    ListaLivroId = table.Column<int>(type: "INTEGER", nullable: false),
+                    LivroId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    DataAdicionado = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LivrosNaLista", x => new { x.ListaLivroId, x.LivroId });
+                    table.ForeignKey(
+                        name: "FK_LivrosNaLista_ListaLivros_ListaLivroId",
+                        column: x => x.ListaLivroId,
+                        principalTable: "ListaLivros",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LivrosNaLista_Livros_LivroId",
+                        column: x => x.LivroId,
+                        principalTable: "Livros",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -150,15 +162,51 @@ namespace Bookshelf.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UsuarioComunidades",
+                columns: table => new
+                {
+                    UsuarioId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ComunidadeId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Papel = table.Column<int>(type: "INTEGER", nullable: false),
+                    DataEntrada = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsuarioComunidades", x => new { x.UsuarioId, x.ComunidadeId });
+                    table.ForeignKey(
+                        name: "FK_UsuarioComunidades_Comunidades_ComunidadeId",
+                        column: x => x.ComunidadeId,
+                        principalTable: "Comunidades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UsuarioComunidades_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "DataCadastro", "Email", "FotoPerfil", "Nome", "Papel", "SenhaHash" },
-                values: new object[] { 1, new DateTime(2025, 5, 27, 19, 3, 52, 334, DateTimeKind.Utc).AddTicks(2549), "admin@bookshelf.com", null, "Admin", 1, "$2a$11$TDz7Z1x5spk2b5PmQHkiFuYgayK0rQIdDaeNQ3MyvwI2x4neB0BJq" });
+                values: new object[] { 1, new DateTime(2025, 5, 29, 1, 50, 23, 210, DateTimeKind.Utc).AddTicks(3408), "admin@bookshelf.com", null, "Admin", 1, "$2a$11$Os46nvjVqhEpLRhZ6MyYaubhABE4O/XW2GcidaeHKi2yfJvt47LZq" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comunidades_UsuarioId",
                 table: "Comunidades",
                 column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LivrosNaLista_LivroId",
+                table: "LivrosNaLista",
+                column: "LivroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsuarioComunidades_ComunidadeId",
+                table: "UsuarioComunidades",
+                column: "ComunidadeId");
         }
 
         /// <inheritdoc />
@@ -171,19 +219,22 @@ namespace Bookshelf.Migrations
                 name: "Comentarios");
 
             migrationBuilder.DropTable(
-                name: "Comunidades");
-
-            migrationBuilder.DropTable(
-                name: "ListasLivros");
-
-            migrationBuilder.DropTable(
-                name: "Livros");
+                name: "LivrosNaLista");
 
             migrationBuilder.DropTable(
                 name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "UsuarioComunidades");
+
+            migrationBuilder.DropTable(
+                name: "ListaLivros");
+
+            migrationBuilder.DropTable(
+                name: "Livros");
+
+            migrationBuilder.DropTable(
+                name: "Comunidades");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");

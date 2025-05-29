@@ -12,7 +12,8 @@ namespace Bookshelf.Db
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Livro> Livros { get; set; }
         public DbSet<Avaliacao> Avaliacoes { get; set; }
-        public DbSet<ListaLivro> ListasLivros { get; set; }
+        public DbSet<ListaLivro> ListaLivros { get; set; }
+        public DbSet<LivroNaLista> LivrosNaLista { get; set; } // <-- Adicione aqui
         public DbSet<Comunidade> Comunidades { get; set; }
         public DbSet<UsuarioComunidade> UsuarioComunidades { get; set; }
         public DbSet<Post> Posts { get; set; }
@@ -25,6 +26,9 @@ namespace Bookshelf.Db
 
             modelBuilder.Entity<UsuarioComunidade>()
                 .HasKey(uc => new { uc.UsuarioId, uc.ComunidadeId });
+
+            modelBuilder.Entity<LivroNaLista>()
+                .HasKey(ll => new { ll.ListaLivroId, ll.LivroId });
 
             // Seed usuário admin:
             modelBuilder.Entity<Usuario>().HasData(

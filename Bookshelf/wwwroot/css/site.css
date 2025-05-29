@@ -22,6 +22,30 @@
     color: transparent;
 }
 
+/* Book shadow */
+.book-shadow {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Comment box */
+.comment-box {
+    transition: all 0.3s ease;
+}
+.comment-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Star rating */
+.star-rating .star {
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating .star.active {
+    color: #f59e0b;
+}
+
 /* Modal */
 .modal {
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -157,13 +181,13 @@
     animation: float 4s ease-in-out infinite;
 }
 
+/* Layout */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
 }
-
 main {
     flex-grow: 1;
     display: flex;
@@ -171,3 +195,17 @@ main {
     justify-content: space-between;
 }
 
+/* Avatar */
+.profile-avatar {
+    border: 4px solid white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Stats card */
+.stats-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}

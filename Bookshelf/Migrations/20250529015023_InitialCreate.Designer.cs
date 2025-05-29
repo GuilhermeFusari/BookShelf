@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookshelf.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250527190352_InitialCreate")]
+    [Migration("20250529015023_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -125,7 +125,7 @@ namespace Bookshelf.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ListasLivros");
+                    b.ToTable("ListaLivros");
                 });
 
             modelBuilder.Entity("Bookshelf.Models.Livro", b =>
@@ -162,6 +162,27 @@ namespace Bookshelf.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Livros");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.LivroNaLista", b =>
+                {
+                    b.Property<int>("ListaLivroId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LivroId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("DataAdicionado")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ListaLivroId", "LivroId");
+
+                    b.HasIndex("LivroId");
+
+                    b.ToTable("LivrosNaLista");
                 });
 
             modelBuilder.Entity("Bookshelf.Models.Post", b =>
@@ -227,11 +248,11 @@ namespace Bookshelf.Migrations
                         new
                         {
                             Id = 1,
-                            DataCadastro = new DateTime(2025, 5, 27, 19, 3, 52, 334, DateTimeKind.Utc).AddTicks(2549),
+                            DataCadastro = new DateTime(2025, 5, 29, 1, 50, 23, 210, DateTimeKind.Utc).AddTicks(3408),
                             Email = "admin@bookshelf.com",
                             Nome = "Admin",
                             Papel = 1,
-                            SenhaHash = "$2a$11$TDz7Z1x5spk2b5PmQHkiFuYgayK0rQIdDaeNQ3MyvwI2x4neB0BJq"
+                            SenhaHash = "$2a$11$Os46nvjVqhEpLRhZ6MyYaubhABE4O/XW2GcidaeHKi2yfJvt47LZq"
                         });
                 });
 
@@ -246,11 +267,12 @@ namespace Bookshelf.Migrations
                     b.Property<DateTime>("DataEntrada")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Papel")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Papel")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("UsuarioId", "ComunidadeId");
+
+                    b.HasIndex("ComunidadeId");
 
                     b.ToTable("UsuarioComunidades");
                 });
@@ -260,6 +282,44 @@ namespace Bookshelf.Migrations
                     b.HasOne("Bookshelf.Models.Usuario", null)
                         .WithMany("ComunidadesCriadas")
                         .HasForeignKey("UsuarioId");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.LivroNaLista", b =>
+                {
+                    b.HasOne("Bookshelf.Models.ListaLivro", "ListaLivro")
+                        .WithMany()
+                        .HasForeignKey("ListaLivroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.Livro", "Livro")
+                        .WithMany()
+                        .HasForeignKey("LivroId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ListaLivro");
+
+                    b.Navigation("Livro");
+                });
+
+            modelBuilder.Entity("Bookshelf.Models.UsuarioComunidade", b =>
+                {
+                    b.HasOne("Bookshelf.Models.Comunidade", "Comunidade")
+                        .WithMany()
+                        .HasForeignKey("ComunidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bookshelf.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comunidade");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Bookshelf.Models.Usuario", b =>

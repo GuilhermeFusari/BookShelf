@@ -1,0 +1,414 @@
+@model Bookshelf.Models.ViewModels.PerfilViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Meu Perfil";
+    ViewData["MainContainerClass"] = "w-full";
+    ViewData["HideLogo"] = true;
+}
+
+<body class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar Menu -->
+        <div class="fixed top-0 left-0 w-48 h-screen bg-blue-800 text-white p-4">
+            <div class="p-4">
+                <div class="flex items-center space-x-2 mb-8">
+                    <div class="gold-gradient p-2 rounded-lg">
+                        <i class="fas fa-book-open text-xl text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">BookShelf</h1>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Menu</h2>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-home w-4"></i>
+                            <span>Início</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-book w-4"></i>
+                            <span>Meus Livros</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-heart w-4"></i>
+                            <span>Favoritos</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-exchange-alt w-4"></i>
+                            <span>Trocas</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-comments w-4"></i>
+                            <span>Mensagens</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Atividades</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-history w-4"></i>
+                            <span>Histórico</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-star w-4"></i>
+                            <span>Avaliações</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="text-base font-semibold mb-3 gold-text">Configurações</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-bell w-4"></i>
+                            <span>Notificações</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded bg-blue-700">
+                            <i class="fas fa-user-circle w-4"></i>
+                            <span>Meu Perfil</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 md:ml-56">
+            <!-- Header -->
+            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-toggle" class="md:hidden text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-bold text-blue-800">Meu Perfil</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="text-blue-800 hover:text-blue-600">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <img src="@Model.Usuario.FotoPerfil" alt="Usuário" class="w-8 h-8 rounded-full">
+                        <span class="font-medium hidden md:inline">@Model.Usuario.Nome</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="p-4">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Profile Card -->
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden lg:col-span-1">
+                        <div class="gold-gradient p-6 text-center">
+                            <div class="flex justify-center">
+                                <img src="@Model.Usuario.FotoPerfil" alt="Usuário" class="w-32 h-32 rounded-full profile-avatar">
+                            </div>
+                            <h2 class="text-xl font-bold text-white mt-4">@Model.Usuario.Nome</h2>
+                            <p class="text-blue-100">Membro desde @Model.Usuario.DataCadastro.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full text-blue-800">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Email</p>
+                                    <p class="font-medium">@Model.Usuario.Email</p>
+                                </div>
+                            </div>
+
+                            <!-- Exibe a quantidade de livros -->
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full text-blue-800">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Livros adicionados</p>
+                                    <p class="font-medium">@Model.QuantidadeLivros</p>
+                                </div>
+                            </div>
+                            <!-- Exibe a quantidade de comunidades -->
+                            <div class="flex items-center space-x-3 mb-4">
+                                <div class="bg-blue-100 p-2 rounded-full text-blue-800">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Comunidades</p>
+                                    <p class="font-medium">@Model.QuantidadeComunidades</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats and Info -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Stats Cards - Versão Integrada -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Cartão de Livros (igual à aba de Meus Livros) -->
+                            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                <div class="border-b border-gray-200 px-4 py-3 flex justify-between items-center">
+                                    <h3 class="text-lg font-medium text-gray-900">Meus Livros</h3>
+                                    <a href="@Url.Action("MeusLivros", "Livros")" class="text-sm text-blue-600 hover:text-blue-800">Ver todos</a>
+                                </div>
+                                <div class="p-4 text-center">
+                                    <i class="fas fa-book fa-2x text-blue-700 mb-2"></i>
+                                    <div class="text-2xl font-bold">@Model.QuantidadeLivros</div>
+                                    <div class="text-sm text-gray-500">Livros adicionados</div>
+                                </div>
+                            </div>
+
+                            <!-- Cartão de Comunidades (igual à aba de Comunidades) -->
+                            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                <div class="border-b border-gray-200 px-4 py-3 flex justify-between items-center">
+                                    <h3 class="text-lg font-medium text-gray-900">Comunidades</h3>
+                                    <a href="@Url.Action("MinhasComunidades", "Comunidades")" class="text-sm text-blue-600 hover:text-blue-800">Ver todas</a>
+                                </div>
+                                <div class="p-4 text-center">
+                                    <i class="fas fa-users fa-2x text-blue-700 mb-2"></i>
+                                    <div class="text-2xl font-bold">@Model.QuantidadeComunidades</div>
+                                    <div class="text-sm text-gray-500">Participando</div>
+                                </div>
+                            </div>
+
+                            <!-- Cartão de Favoritos (visual) -->
+                            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                                <div class="border-b border-gray-200 px-4 py-3 flex justify-between items-center">
+                                    <h3 class="text-lg font-medium text-gray-900">Favoritos</h3>
+                                    <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Ver todos</a>
+                                </div>
+                                <div class="p-4 text-center">
+                                    <i class="fas fa-heart fa-2x text-pink-500 mb-2"></i>
+                                    <div class="text-2xl font-bold">0</div>
+                                    <div class="text-sm text-gray-500">Livros favoritos</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Personal Info -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                            <div class="border-b border-gray-200 px-6 py-4">
+                                <h3 class="text-lg font-medium text-gray-900">Informações Pessoais</h3>
+                            </div>
+                            <div class="p-6">
+                                <form>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label for="full-name" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                                            <input type="text" id="full-name" value="@Model.Usuario.Nome" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                        
+                                        <div>
+                                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                            <input type="email" id="email" value="@Model.Usuario.Email" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex justify-end space-x-3 mt-6">
+                                        <button type="button" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            Cancelar
+                                        </button>
+                                        <button type="submit" class="gold-gradient hover:bg-amber-600 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                            Salvar Alterações
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                
+    
+
+                        <!-- Atividades Recentes -->
+                        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                            <div class="border-b border-gray-200 px-6 py-4">
+                                <h3 class="text-lg font-medium text-gray-900">Atividades Recentes</h3>
+                            </div>
+                            <div class="p-6">
+                                <ul class="space-y-3">
+                                    <li>
+                                        <span class="text-sm text-gray-700">
+                                            Último acesso: <strong>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</strong>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="text-sm text-gray-700">
+                                            Livros adicionados: <strong>@Model.QuantidadeLivros</strong>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="text-sm text-gray-700">
+                                            Comunidades participando: <strong>@Model.QuantidadeComunidades</strong>
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="text-sm text-gray-700">
+                                            Bem-vindo(a) de volta, <strong>@Model.Usuario.Nome</strong>!
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="password-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+        
+        <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4 modal-container">
+            <div class="absolute top-0 right-0 p-2">
+                <button id="close-password-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Alterar Senha</h3>
+                
+                <form id="password-form">
+                    <div class="mb-4">
+                        <label for="current-password" class="block text-sm font-medium text-gray-700 mb-1">Senha Atual</label>
+                        <input type="password" id="current-password" name="current-password" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="new-password" class="block text-sm font-medium text-gray-700 mb-1">Nova Senha</label>
+                        <input type="password" id="new-password" name="new-password" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <p class="mt-1 text-xs text-gray-500">A senha deve ter pelo menos 8 caracteres</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirmar Nova Senha</label>
+                        <input type="password" id="confirm-password" name="confirm-password" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" id="cancel-password-btn" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="gold-gradient hover:bg-amber-600 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                            Alterar Senha
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileSidebar = document.getElementById('mobile-sidebar');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const changePasswordBtn = document.getElementById('change-password-btn');
+        const passwordModal = document.getElementById('password-modal');
+        const closePasswordModalBtn = document.getElementById('close-password-modal');
+        const cancelPasswordBtn = document.getElementById('cancel-password-btn');
+        const passwordForm = document.getElementById('password-form');
+
+        // Initialize the app
+        function init() {
+            setupEventListeners();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Mobile menu
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileSidebar.classList.remove('-translate-x-full');
+                });
+            }
+
+            if (closeMenuBtn) {
+                closeMenuBtn.addEventListener('click', () => {
+                    mobileSidebar.classList.add('-translate-x-full');
+                });
+            }
+
+            // Edit profile button
+            if (editProfileBtn) {
+                editProfileBtn.addEventListener('click', () => {
+                    alert('Funcionalidade de edição de perfil será implementada aqui!');
+                });
+            }
+
+            // Change password modal
+            if (changePasswordBtn) {
+                changePasswordBtn.addEventListener('click', openPasswordModal);
+            }
+            
+            if (closePasswordModalBtn) {
+                closePasswordModalBtn.addEventListener('click', closePasswordModal);
+            }
+            
+            if (cancelPasswordBtn) {
+                cancelPasswordBtn.addEventListener('click', closePasswordModal);
+            }
+
+            // Password form submission
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', handlePasswordChange);
+            }
+        }
+
+        // Open password modal
+        function openPasswordModal() {
+            passwordModal.classList.remove('hidden');
+            setTimeout(() => {
+                passwordModal.querySelector('.modal-container').classList.add('opacity-100', 'translate-y-0');
+            }, 10);
+        }
+
+        // Close password modal
+        function closePasswordModal() {
+            passwordModal.querySelector('.modal-container').classList.remove('opacity-100', 'translate-y-0');
+            setTimeout(() => {
+                passwordModal.classList.add('hidden');
+                passwordForm.reset();
+            }, 300);
+        }
+
+        // Handle password change
+        function handlePasswordChange(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            // Simple validation
+            if (newPassword !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+            
+            if (newPassword.length < 8) {
+                alert('A senha deve ter pelo menos 8 caracteres!');
+                return;
+            }
+            
+            // In a real app, you would send this to the server
+            console.log('Changing password:', { currentPassword, newPassword });
+            
+            // Simulate password change
+            setTimeout(() => {
+                alert('Senha alterada com sucesso!');
+                closePasswordModal();
+            }, 500);
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
