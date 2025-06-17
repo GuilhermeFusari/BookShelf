@@ -2,7 +2,7 @@ namespace Bookshelf.Models.Enums
 {
     public enum PapelUsuario
     {
-        Usuario,
-        Administrador
+        Usuario = 0,
+        Administrador = 1
     }
 }

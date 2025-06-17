@@ -1,0 +1,149 @@
+@model Bookshelf.Models.ViewModels.ListaLivrosViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["MainContainerClass"] = "w-full";
+    ViewData["Title"] = "Lista de Livros";
+}
+
+<main class="bg-gradient-to-br from-blue-50 to-green-50 min-h-screen">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="hidden md:flex flex-col w-56 bg-blue-800 text-white p-6 rounded-r-3xl shadow-lg">
+            <nav class="flex-1">
+                <h2 class="text-base font-semibold mb-3 gold-text">Menu</h2>
+                <ul class="space-y-3 mb-8">
+                    <li><a href="/" class="flex items-center gap-2 hover:text-amber-300 transition"><i class="fas fa-home"></i>Início</a></li>
+                    <li><a href="#" class="flex items-center gap-2 hover:text-amber-300 transition"><i class="fas fa-compass"></i>Explorar</a></li>
+                    <li><a href="#" class="flex items-center gap-2 hover:text-amber-300 transition"><i class="fas fa-bookmark"></i>Minha Estante</a></li>
+                    <li><a href="#" class="flex items-center gap-2 hover:text-amber-300 transition"><i class="fas fa-calendar-alt"></i>Diário</a></li>
+                </ul>
+                <h2 class="text-base font-semibold mb-4 gold-text">Gêneros</h2>
+                <div class="grid grid-cols-2 gap-2 mb-2">
+                    <a href="/Livro/ListaLivros@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"?autor={Context.Request.Query["autor"]}")"
+                       class="col-span-2 genre-icon bg-gray-200 hover:bg-blue-200 text-blue-800 p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(string.IsNullOrEmpty(Context.Request.Query["genero"]) ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-globe text-lg mb-1"></i>
+                        <span>Todos</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="?genero=Aventura@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Aventura" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-mountain text-lg mb-1"></i>
+                        <span>Aventura</span>
+                    </a>
+                    <a href="?genero=Romance@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-pink-600 hover:bg-pink-500 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Romance" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-heart text-lg mb-1"></i>
+                        <span>Romance</span>
+                    </a>
+                    <a href="?genero=Terror@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-purple-800 hover:bg-purple-700 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Terror" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-ghost text-lg mb-1"></i>
+                        <span>Terror</span>
+                    </a>
+                    <a href="?genero=Fantasia@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-indigo-600 hover:bg-indigo-500 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Fantasia" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-dragon text-lg mb-1"></i>
+                        <span>Fantasia</span>
+                    </a>
+                    <a href="?genero=Suspense@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-gray-600 hover:bg-gray-600 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Suspense" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-question text-lg mb-1"></i>
+                        <span>Suspense</span>
+                    </a>
+                    <a href="?genero=Religioso@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-yellow-700 hover:bg-yellow-600 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Religioso" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-pray text-lg mb-1"></i>
+                        <span>Religioso</span>
+                    </a>
+                    <a href="?genero=Profissional@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-blue-700 hover:bg-blue-600 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Profissional" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-briefcase text-lg mb-1"></i>
+                        <span>Profissional</span>
+                    </a>
+                    <a href="?genero=Política@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-red-700 hover:bg-red-600 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Política" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-landmark text-lg mb-1"></i>
+                        <span>Política</span>
+                    </a>
+                    <a href="?genero=Culinária@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-orange-600 hover:bg-orange-500 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Culinária" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-utensils text-lg mb-1"></i>
+                        <span>Culinária</span>
+                    </a>
+                    <a href="?genero=Sci-fi@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-teal-600 hover:bg-teal-500 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Sci-fi" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-robot text-lg mb-1"></i>
+                        <span>Sci-fi</span>
+                    </a>
+                    <a href="?genero=Infantil@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-red-500 hover:bg-red-400 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Infantil" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-child text-lg mb-1"></i>
+                        <span>Infantil</span>
+                    </a>
+                    <a href="?genero=Acadêmicos@(string.IsNullOrEmpty(Context.Request.Query["autor"]) ? "" : $"&autor={Context.Request.Query["autor"]}")"
+                       class="genre-icon bg-green-600 hover:bg-green-500 text-white p-2 rounded-lg flex flex-col items-center justify-center text-scale-75 @(Context.Request.Query["genero"] == "Acadêmicos" ? "ring-2 ring-amber-400" : "")">
+                        <i class="fas fa-user-graduate text-lg mb-1"></i>
+                        <span>Acadêmicos</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <section class="flex-1 p-6">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-8 gap-4">
+                <h1 class="text-3xl font-bold text-blue-900">Lista de Livros</h1>
+                <!-- Filtros por gênero e autor -->
+                <form method="get" class="flex flex-wrap gap-2 items-end">
+                    <div>
+                        <label for="genero" class="block text-sm font-medium text-gray-700">Filtrar por Gênero</label>
+                        <select id="genero" name="genero" class="border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Todos os Gêneros</option>
+                            @foreach (var genero in Model.Generos)
+                            {
+                                <option value="@genero" @(Context.Request.Query["genero"] == genero ? "selected" : "")>@genero</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label for="autor" class="block text-sm font-medium text-gray-700">Filtrar por Autor</label>
+                        <select id="autor" name="autor" class="border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Todos os Autores</option>
+                            @foreach (var autor in Model.Autores)
+                            {
+                                <option value="@autor" @(Context.Request.Query["autor"] == autor ? "selected" : "")>@autor</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 mt-5">
+                        Filtrar
+                    </button>
+                </form>
+            </div>
+
+            <!-- Lista de Livros -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                @foreach (var livro in Model.Livros)
+                {
+                    <a href="/Livro/Detalhes/@livro.Id" class="block hover:no-underline">
+                        <div class="book-card bg-white rounded-xl overflow-hidden shadow hover:shadow-xl transition transform hover:-translate-y-1">
+                            <img src="@livro.CapaUrl" alt="Capa do livro" class="w-full h-40 object-cover">
+                            <div class="p-4">
+                                <h3 class="font-semibold text-blue-900 truncate">@livro.Titulo</h3>
+                                <p class="text-sm text-gray-600">@livro.Autor</p>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+
+            <!-- Caso não haja livros -->
+            @if (!Model.Livros.Any())
+            {
+                <p class="text-gray-600 mt-6 text-center">Nenhum livro encontrado com os filtros aplicados.</p>
+            }
+        </section>
+    </div>
+</main>

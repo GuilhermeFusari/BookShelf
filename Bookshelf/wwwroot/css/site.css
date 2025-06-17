@@ -1,10 +1,17 @@
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+/* Sidebar scrollbar */
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: #1e40af transparent;
 }
-.floating {
-    animation: float 4s ease-in-out infinite;
+.sidebar::-webkit-scrollbar {
+    width: 6px;
 }
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: #1e40af;
+    border-radius: 3px;
+}
+
+/* Gradients */
 .gold-gradient {
     background: linear-gradient(135deg, #f59e0b, #fbbf24);
 }
@@ -14,6 +21,55 @@
     background-clip: text;
     color: transparent;
 }
+
+/* Book shadow */
+.book-shadow {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Comment box */
+.comment-box {
+    transition: all 0.3s ease;
+}
+.comment-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Star rating */
+.star-rating .star {
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.star-rating .star.active {
+    color: #f59e0b;
+}
+
+/* Modal */
+.modal {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Hover effects */
+.table-row-hover:hover {
+    background-color: #f3f4f6;
+}
+.pagination-active {
+    background-color: #1e40af;
+    color: white;
+}
+.book-cover {
+    transition: transform 0.3s ease;
+}
+.book-cover:hover {
+    transform: scale(1.05);
+}
+
+/* Auth and input buttons */
 .auth-btn {
     transition: all 0.2s ease;
 }
@@ -33,7 +89,123 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/* Footer link */
+.footer-link {
+    transition: all 0.2s ease;
+}
+.footer-link:hover {
+    color: #fbbf24;
+    transform: translateX(3px);
+}
+
+/* Book card */
+.book-card {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Genre icon */
+.genre-icon {
+    transition: all 0.2s ease;
+}
+.genre-icon:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+}
+
+/* Progress bar */
 .progress-bar {
     height: 4px;
     transition: width 0.5s ease;
+}
+
+/* Text sizing */
+.text-scale-90 {
+    font-size: 0.9rem;
+}
+.text-scale-80 {
+    font-size: 0.8rem;
+}
+.text-scale-75 {
+    font-size: 0.75rem;
+}
+
+/* Line height */
+.leading-tight {
+    line-height: 1.25;
+}
+.leading-normal {
+    line-height: 1.5;
+}
+
+/* Scaling */
+.scale-95 {
+    transform: scale(0.95);
+}
+.scale-90 {
+    transform: scale(0.9);
+}
+
+/* Search bar */
+.search-bar {
+    transition: all 0.3s ease;
+    width: 200px;
+}
+.search-bar:focus {
+    width: 300px;
+}
+@media (max-width: 768px) {
+    .search-bar {
+        width: 150px;
+    }
+    .search-bar:focus {
+        width: 200px;
+    }
+}
+
+/* Floating animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+.floating {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Avatar */
+.profile-avatar {
+    border: 4px solid white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Stats card */
+.stats-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }

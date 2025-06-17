@@ -3,6 +3,7 @@ using System;
 using Bookshelf.Db;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookshelf.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250529015023_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -172,6 +175,9 @@ namespace Bookshelf.Migrations
                     b.Property<DateTime>("DataAdicionado")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ListaLivroId", "LivroId");
 
                     b.HasIndex("LivroId");
@@ -242,11 +248,11 @@ namespace Bookshelf.Migrations
                         new
                         {
                             Id = 1,
-                            DataCadastro = new DateTime(2025, 5, 29, 2, 0, 9, 134, DateTimeKind.Utc).AddTicks(5923),
+                            DataCadastro = new DateTime(2025, 5, 29, 1, 50, 23, 210, DateTimeKind.Utc).AddTicks(3408),
                             Email = "admin@bookshelf.com",
                             Nome = "Admin",
                             Papel = 1,
-                            SenhaHash = "$2a$11$0RYaZe52fhLn/KueaZSNC.3PJpvvwADk4F3.Fn06VdN.qw2DLcvlq"
+                            SenhaHash = "$2a$11$Os46nvjVqhEpLRhZ6MyYaubhABE4O/XW2GcidaeHKi2yfJvt47LZq"
                         });
                 });
 

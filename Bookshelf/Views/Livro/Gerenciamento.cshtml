@@ -1,0 +1,373 @@
+@model IEnumerable<Bookshelf.Models.Livro>
+@{
+    Layout="~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Gerenciamento de Livros";
+    ViewData["MainContainerClass"] = "w-full";
+    ViewData["HideLogo"] = true;
+}
+
+<main class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar Menu -->
+        <div class="fixed top-0 left-0 w-48 h-screen bg-blue-800 text-white p-4 hidden md:block">
+            <div class="p-4">
+                <div class="flex items-center space-x-2 mb-8">
+                    <div class="gold-gradient p-2 rounded-lg">
+                        <i class="fas fa-book-open text-xl text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">BookShelf Admin</h1>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Menu</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-tachometer-alt w-4"></i>
+                            <span>Dashboard</span>
+                        </a></li>
+                        <li>
+                            <a href="/Usuario/ListaUsuarios" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-users w-4"></i>
+                                <span>Usuários</span>
+                            </a>
+                        </li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded bg-blue-700">
+                            <i class="fas fa-book w-4"></i>
+                            <span>Livros</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-tags w-4"></i>
+                            <span>Categorias</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-comments w-4"></i>
+                            <span>Comentários</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Relatórios</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-chart-line w-4"></i>
+                            <span>Estatísticas</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-file-export w-4"></i>
+                            <span>Exportar Dados</span>
+                        </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="text-base font-semibold mb-3 gold-text">Configurações</h2>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-cog w-4"></i>
+                            <span>Sistema</span>
+                        </a></li>
+                        <li><a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                            <i class="fas fa-user-shield w-4"></i>
+                            <span>Permissões</span>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 md:ml-56">
+            <!-- Header -->
+            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-toggle" class="md:hidden text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-bold text-blue-800">Gerenciamento de Livros</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="text-blue-800 hover:text-blue-600">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Admin" class="w-8 h-8 rounded-full">
+                        <span class="font-medium hidden md:inline">Admin</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="p-4">
+                <!-- Actions Bar -->
+                <div class="bg-white rounded-lg shadow-sm p-4 mb-4">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="relative w-full md:w-64">
+                            <input type="text" placeholder="Buscar livros..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                                <i class="fas fa-filter"></i>
+                                <span>Filtrar</span>
+                            </button>
+                            <a href="/Livro/RegistroLivro" class="gold-gradient hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                                <i class="fas fa-plus"></i>
+                                <span>Adicionar Livro</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Books Table -->
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+    <thead class="bg-gradient-to-r from-blue-700 to-blue-500 text-white">
+        <tr>
+            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Título</th>
+            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Autor</th>
+            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Categoria</th>
+            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Editora</th>
+            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">Ano</th>
+            <th class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">ISBN</th>
+            <th class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider">Ações</th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-100">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var livro in Model)
+            {
+                <tr class="hover:bg-blue-50 transition">
+                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">@livro.Titulo</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-700">@livro.Autor</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-700">@livro.Genero</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-700">@livro.Editora</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-700">@livro.AnoPublicacao</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-700">@livro.ISBN</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <a href="/Livro/Editar/@livro.Id" class="inline-block px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-semibold text-xs mr-2">
+                            <i class="fas fa-edit mr-1"></i>Editar
+                        </a>
+                        <a href="/Livro/Excluir/@livro.Id" class="inline-block px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition font-semibold text-xs">
+                            <i class="fas fa-trash-alt mr-1"></i>Excluir
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="px-6 py-8 text-center text-gray-400">
+                    Nenhum livro cadastrado.
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Mostrando
+                                    <span class="font-medium" id="pagination-from">1</span>
+                                    até
+                                    <span class="font-medium" id="pagination-to">10</span>
+                                    de
+                                    <span class="font-medium" id="pagination-total">50</span>
+                                    resultados
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Anterior</span>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </a>
+                                    <a hr123
+                                    
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        2
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        3
+                                    </a>
+                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                        ...
+                                    </span>
+                                    <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                        8
+                                    </a>
+                                    <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Próximo</span>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p>Total de livros: @(Model == null ? 0 : Model.Count())</p>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add/Edit Book Modal -->
+    <div id="book-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+        
+        <div class="relative bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 modal-container">
+            <div class="absolute top-0 right-0 p-2">
+                <button id="close-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4" id="modal-title">Adicionar Novo Livro</h3>
+                
+                <form id="book-form">
+                    <input type="hidden" id="book-id">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Título*</label>
+                            <input type="text" id="title" name="title" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="author" class="block text-sm font-medium text-gray-700 mb-1">Autor*</label>
+                            <input type="text" id="author" name="author" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="isbn" class="block text-sm font-medium text-gray-700 mb-1">ISBN</label>
+                            <input type="text" id="isbn" name="isbn" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="publisher" class="block text-sm font-medium text-gray-700 mb-1">Editora</label>
+                            <input type="text id="publisher" name="publisher" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Ano de Publicação</label>
+                            <input type="number" id="year" name="year" min="1900" max="2099" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="pages" class="block text-sm font-medium text-gray-700 mb-1">Número de Páginas</label>
+                            <input type="number" id="pages" name="pages" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Categoria*</label>
+                            <select id="category" name="category" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Selecione...</option>
+                                <option value="fiction">Ficção</option>
+                                <option value="romance">Romance</option>
+                                <option value="fantasy">Fantasia</option>
+                                <option value="biography">Biografia</option>
+                                <option value="history">História</option>
+                                <option value="science">Ciência</option>
+                                <option value="technology">Tecnologia</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="language" class="block text-sm font-medium text-gray-700 mb-1">Idioma</label>
+                            <select id="language" name="language" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="portuguese">Português</option>
+                                <option value="english">Inglês</option>
+                                <option value="spanish">Espanhol</option>
+                                <option value="french">Francês</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                        <textarea id="description" name="description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label for="cover" class="block text-sm font-medium text-gray-700 mb-1">Capa do Livro</label>
+                            <input type="file" id="cover" name="cover" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <div id="cover-preview" class="mt-2 hidden">
+                                <img src="" alt="Preview" class="h-32 w-auto rounded shadow">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                            <select id="status" name="status" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                <option value="published">Publicado</option>
+                                <option value="pending">Pendente</option>
+                                <option value="rejected">Rejeitado</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button type="button" id="cancel-btn" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="gold-gradient hover:bg-amber-600 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                            Salvar Livro
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal">
+        <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+        
+        <div class="relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4 modal-container">
+            <div class="absolute top-0 right-0 p-2">
+                <button id="close-delete-modal" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="flex items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                        <i class="fas fa-exclamation text-red-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Confirmar Exclusão</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">Tem certeza que deseja excluir o livro <span id="delete-book-title" class="font-medium">Dom Casmurro</span>? Esta ação não pode ser desfeita.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3 mt-6">
+                    <button type="button" id="cancel-delete-btn" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Cancelar
+                    </button>
+                    <button type="button" id="confirm-delete-btn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        Excluir Livro
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</main>

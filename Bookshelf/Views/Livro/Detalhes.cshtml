@@ -1,0 +1,387 @@
+@model Bookshelf.Models.Livro
+@{
+    Layout="~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = Model.Titulo;
+    ViewData["MainContainerClass"] = "w-full";
+    ViewData["HideLogo"] = true;
+    
+}
+
+<main class="bg-gray-100">
+    <div class="flex min-h-screen">
+        <!-- Sidebar Menu -->
+        <div class="fixed top-0 left-0 w-56 h-screen bg-blue-800 text-white p-4 hidden md:block sidebar overflow-y-auto">
+            <div class="p-4">
+                <div class="flex items-center space-x-2 mb-8">
+                    <div class="gold-gradient p-2 rounded-lg">
+                        <i class="fas fa-book-open text-xl text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">BookShelf</h1>
+                </div>
+                
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Menu</h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="/" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-home w-4"></i>
+                                <span>Início</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("MeusLivros", "Livro")" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-book w-4"></i>
+                                <span>Meus Livros</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-heart w-4"></i>
+                                <span>Favoritos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-comments w-4"></i>
+                                <span>Mensagens</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="text-base font-semibold mb-3 gold-text">Atividades</h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-history w-4"></i>
+                                <span>Histórico</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-star w-4"></i>
+                                <span>Avaliações</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h2 class="text-base font-semibold mb-3 gold-text">Configurações</h2>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-bell w-4"></i>
+                                <span>Notificações</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Perfil", "Usuario")" class="flex items-center space-x-2 hover:text-amber-300 transition p-2 rounded">
+                                <i class="fas fa-user-circle w-4"></i>
+                                <span>Meu Perfil</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 md:ml-56">
+            <div class="mb-6">
+                <button onclick="history.back()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md shadow-sm text-sm font-medium">
+                    <i class="fas fa-arrow-left mr-2"></i> Voltar
+                </button>
+            </div>
+            <!-- Header -->
+            <header class="bg-white shadow-sm p-4 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-toggle" class="md:hidden text-blue-800">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-bold text-blue-800">Detalhes do Livro</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        
+                        <span class="font-medium hidden md:inline"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Book Details Content -->
+            <main class="p-4 md:p-6">
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <!-- Book Header -->
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <!-- Book Cover -->
+                            <div class="w-full md:w-1/3 lg:w-1/4 flex justify-center">
+                                <img src="@Model.CapaUrl" alt="Capa do Livro" class="w-64 h-auto rounded-lg book-shadow">
+                            </div>
+                            
+                            <!-- Book Info -->
+                            <div class="w-full md:w-2/3 lg:w-3/4">
+                                <h1 class="text-2xl md:text-3xl font-bold text-gray-900">@Model.Titulo</h1>
+                                @if (ViewBag.TotalAvaliacoes > 0)
+                                {
+                                    <div class="flex items-center mb-2">
+                                        <span class="text-amber-500 mr-2">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= Math.Round((double)ViewBag.MediaAvaliacao))
+                                                {
+                                                    <i class="fas fa-star"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="far fa-star"></i>
+                                                }
+                                            }
+                                        </span>
+                                        <span class="text-gray-700 font-medium">@($"{ViewBag.MediaAvaliacao:F1}")</span>
+                                        <span class="text-gray-500 text-sm ml-2">(@ViewBag.TotalAvaliacoes avaliação@(ViewBag.TotalAvaliacoes > 1 ? "s" : ""))</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-gray-500 text-sm mb-2">Ainda não há avaliações para este livro.</div>
+                                }
+                                
+                                <p class="text-lg text-gray-600 mb-2">@Model.Autor</p>
+                                
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">@Model.Genero</span>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                    <div>
+                                        <p class="text-sm text-gray-500">Editora</p>
+                                        <p class="font-medium">@Model.Editora</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Ano</p>
+                                        <p class="font-medium">@Model.AnoPublicacao</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">ISBN</p>
+                                        <p class="font-medium">@Model.ISBN</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-3">
+                                    <button class="gold-gradient hover:bg-amber-600 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium">
+                                        <i class="fas fa-heart mr-2"></i> Adicionar aos Favoritos
+                                    </button>
+                                    <form action="/Livro/SalvarParaLerDepois" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="livroId" value="@Model.Id" />
+                                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md shadow-sm text-sm font-medium">
+                                            <i class="fas fa-bookmark mr-2"></i> Salvar para Ler Depois
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Review Section -->
+                    <div class="p-6 border-b border-gray-200">
+                        <h2 class="text-xl font-bold text-gray-900 mb-4">Deixe sua Avaliação</h2>
+                        
+                        <div class="flex flex-col md:flex-row gap-6">
+                            <!-- User Avatar -->
+                            <div class="w-full md:w-1/4 lg:w-1/5 flex justify-center md:justify-start">
+                                <img src="https://avatars.githubusercontent.com/u/103198882?v=4" 
+                                     alt="Seu Avatar" 
+                                     class="w-16 h-16 rounded-full border-2 border-amber-400">
+                            </div>
+                            
+                            <!-- Review Form -->
+                            <div class="w-full md:w-3/4 lg:w-4/5">
+                                <form id="review-form" method="post" action="@Url.Action("Avaliar", "Livro", new { livroId = Model.Id })">
+                                    @Html.AntiForgeryToken()
+                                    <!-- Avaliação com estrelas -->
+                                    <div class="mb-4">
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">Sua Avaliação</label>
+                                        <div id="star-rating" class="flex space-x-1 text-yellow-500 text-2xl cursor-pointer">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <i class="fas fa-star star text-2xl mr-1 @(i <= 0 ? "text-yellow-500" : "text-gray-300")" data-value="@i"></i>
+                                            }
+                                        </div>
+                                        <input type="hidden" id="user-rating" name="Nota" value="0" />
+                                    </div>
+
+                                    
+
+                                    <!-- Comentário -->
+                                    <div class="mb-4">
+                                        <label for="review-text" class="block text-sm font-medium text-gray-700 mb-1">Seu Comentário</label>
+                                        <textarea id="review-text" name="Comentario" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="O que você achou deste livro?"></textarea>
+                                    </div>
+
+                                    <div class="flex justify-end">
+                                        <button type="submit" class="gold-gradient hover:bg-amber-600 text-white px-6 py-2 rounded-md shadow-sm font-medium">
+                                            Publicar Avaliação
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Community Reviews -->
+                    <div class="p-6">
+                        <h2 class="text-xl font-bold text-gray-900 mb-6">Avaliações da Comunidade</h2>
+                        
+                        @if (ViewBag.Avaliacoes != null && ViewBag.Avaliacoes.Count > 0)
+                        {
+                            foreach (var avaliacao in ViewBag.Avaliacoes)
+                            {
+                                <div class="mb-6 p-4 bg-gray-50 rounded-lg comment-box">
+                                    <div class="flex items-start mb-3">
+                                        @if (!string.IsNullOrEmpty(avaliacao.UsuarioAvatar))
+                                        {
+                                            <img src="@avaliacao.UsuarioAvatar" alt="Usuário" class="w-10 h-10 rounded-full mr-3 object-cover bg-gray-200" />
+                                        }
+                                        else
+                                        {
+                                            <div class="w-10 h-10 rounded-full mr-3 flex items-center justify-center bg-amber-400 text-white font-bold text-lg uppercase">
+                                                @avaliacao.UsuarioIniciais
+                                            </div>
+                                        }
+                                        <div>
+                                            <h4 class="font-semibold">@avaliacao.UsuarioNome</h4>
+                                            <div class="flex items-center">
+                                                <div class="star-rating flex mr-2">
+                                                    @for (int i = 1; i <= 5; i++)
+                                                    {
+                                                        if (i <= avaliacao.Nota)
+                                                        {
+                                                            <i class="fas fa-star star active text-sm"></i>
+                                                        }
+                                                        else
+                                                        {
+                                                            <i class="fas fa-star star text-sm"></i>
+                                                        }
+                                                    }
+                                                </div>
+                                                <span class="text-gray-500 text-sm">@avaliacao.DataAvaliacao.ToString("dd/MM/yyyy")</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-700">@avaliacao.Comentario</p>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="text-gray-500 text-center">Ainda não há avaliações para este livro.</div>
+                        }
+                        
+                        <!-- Load More Button -->
+                        <div class="text-center mt-6">
+                            <button class="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-md shadow-sm hover:bg-gray-50">
+                                Carregar Mais Avaliações
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Star Rating Functionality
+        document.querySelectorAll('.star-rating .star').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.getAttribute('data-rating'));
+                const starContainer = this.parentElement;
+                
+                // Update stars visually
+                starContainer.querySelectorAll('.star').forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+                
+                // Update hidden input if it's the user rating
+                if (starContainer.closest('form')) {
+                    document.getElementById('user-rating').value = rating;
+                }
+            });
+        });
+
+        // Review Form Submission
+        // document.getElementById('review-form').addEventListener('submit', function(e) {
+        //     e.preventDefault();
+            
+        //     const rating = document.getElementById('user-rating').value;
+        //     const title = document.getElementById('review-title').value;
+        //     const text = document.getElementById('review-text').value;
+            
+        //     if (rating === '0') {
+        //         alert('Por favor, selecione uma avaliação com as estrelas.');
+        //         return;
+        //     }
+            
+        //     if (!text.trim()) {
+        //         alert('Por favor, escreva seu comentário.');
+        //         return;
+        //     }
+            
+        //     // In a real app, you would send this data to the server
+        //     console.log('Submitting review:', { rating, title, text });
+            
+        //     // Simulate successful submission
+        //     alert('Avaliação enviada com sucesso! Obrigado por compartilhar sua opinião.');
+        //     this.reset();
+            
+        //     // Reset stars
+        //     this.querySelectorAll('.star-rating .star').forEach(star => {
+        //         star.classList.remove('active');
+        //     });
+        //     document.getElementById('user-rating').value = '0';
+        // });
+
+        // Like button functionality
+        document.querySelectorAll('[class*="fa-thumbs-up"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const countElement = this.nextElementSibling;
+                let count = parseInt(countElement.textContent.trim());
+                countElement.textContent = ` ${count + 1}`;
+                
+                // Change color to indicate liked
+                this.classList.remove('text-blue-600', 'hover:text-blue-800');
+                this.classList.add('text-blue-800', 'hover:text-blue-900');
+            });
+        });
+
+        document.querySelectorAll('#star-rating i').forEach(star => {
+            star.addEventListener('click', function () {
+                const rating = this.getAttribute('data-value');
+                document.getElementById('user-rating').value = rating;
+
+                // Atualiza as estrelas visualmente
+                document.querySelectorAll('#star-rating i').forEach(s => {
+                    if (parseInt(s.getAttribute('data-value')) <= rating) {
+                        s.classList.remove('text-gray-300');
+                        s.classList.add('text-yellow-500');
+                    } else {
+                        s.classList.remove('text-yellow-500');
+                        s.classList.add('text-gray-300');
+                    }
+                });
+            });
+        });
+    </script>
+
+</main>

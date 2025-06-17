@@ -3,12 +3,85 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BookShelf</title>
+    <title>BookShelf - @ViewData["Title"]</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/registrar.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body class="bg-blue-50 min-h-screen flex flex-col">
-    @RenderBody()
+<body class="bg-blue-50 min-h-screen flex flex-col text-gray-800">
+    <header class="bg-blue-800 text-blue-50 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="gold-gradient p-2 rounded-lg">
+                    <i class="fas fa-book-open text-xl"></i>
+                </div>
+                            @if (ViewData["HideLogo"] as bool? != true){
+                <a href="/" class="text-xl font-bold cursor-pointer">BookShelf</a>
+                }
+            </div>
+
+            <div class="flex items-center space-x-4 pr-6">
+                @if (!(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index"))
+                {
+                    <a href="@Url.Action("Index", "Home")"
+                       class="header-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-semibold shadow transition">
+                        Início
+                    </a>
+                }
+
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <span class="flex items-center gap-2 bg-white/80 text-blue-900 px-4 py-2 rounded-full font-semibold shadow transition">
+                        <i class="fas fa-user-circle text-blue-700 text-lg"></i>
+                        Olá, <span class="font-bold">@User.Identity.Name!</span>
+                    </span>
+                    <a href="@Url.Action("Perfil", "Usuario")"
+                       class="header-btn bg-white text-blue-800 hover:bg-blue-100 px-4 py-2 rounded-full font-semibold shadow transition">
+                        Perfil
+                    </a>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <a href="/Livro/Gerenciamento"
+                           class="header-btn bg-gradient-to-r from-amber-400 to-yellow-500 text-white px-4 py-2 rounded-full font-semibold shadow transition">
+                            Gerenciar Livros
+                        </a>
+                    }
+                    <form action="/Usuario/Logout" method="post" class="inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit"
+                                class="header-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full font-semibold shadow transition"
+                                title="Sair">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <a href="/Usuario/Login"
+                       class="header-btn bg-white text-blue-800 hover:bg-blue-100 px-4 py-2 rounded-full font-semibold shadow transition">
+                        Login
+                    </a>
+                    <a href="/Usuario/Registrar"
+                       class="header-btn bg-gradient-to-r from-amber-400 to-yellow-500 text-white px-4 py-2 rounded-full font-semibold shadow transition">
+                        Cadastre-se
+                    </a>
+                }
+            </div>
+
+    </div>
+    </header>
+
+    <main class="flex-grow flex flex-col justify-between p-4">
+    <div class="@ViewData["MainContainerClass"]">
+        @RenderBody()
+    </div>
+</main>
+
+    <footer class="bg-blue-800 text-blue-50 p-4 text-center">
+        &copy; @DateTime.Now.Year - BookShelf
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>

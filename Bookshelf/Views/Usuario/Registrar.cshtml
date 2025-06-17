@@ -1,225 +1,97 @@
 @model Bookshelf.Models.Usuario
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BookShelf - Cadastro</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body class="bg-blue-50 min-h-screen flex flex-col text-gray-800">
-    <header class="bg-blue-800 text-blue-50 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="gold-gradient p-2 rounded-lg">
-                    <i class="fas fa-book-open text-xl"></i>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Cadastro";
+    ViewData["HideLogo"] = false;
+}
+
+<main class="flex-grow flex items-center justify-center p-4">
+    <div class="container mx-auto max-w-4xl">
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row">
+            <div class="md:w-1/2 bg-gradient-to-br from-blue-700 to-blue-900 p-8 text-blue-50 flex flex-col justify-center">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold mb-2">Junte-se a nós!</h2>
+                    <p class="text-blue-200">Crie sua conta e comece sua jornada literária</p>
                 </div>
-                <h1 class="text-xl font-bold">BookShelf</h1>
-            </div>
-            <a href="#" class="hover:text-amber-300 transition">Voltar ao site</a>
-        </div>
-    </header>
-
-    <main class="flex-grow flex items-center justify-center p-4">
-        <div class="container mx-auto max-w-4xl">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row">
-                <div class="md:w-1/2 bg-gradient-to-br from-blue-700 to-blue-900 p-8 text-blue-50 flex flex-col justify-center">
-                    <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold mb-2">Junte-se a nós!</h2>
-                        <p class="text-blue-200">Crie sua conta e comece sua jornada literária</p>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&q=80" alt="Pessoa lendo livro" class="w-full max-w-xs mx-auto rounded-lg floating" />
-                    <div class="mt-8 text-center">
-                        <p class="text-blue-200">Já tem uma conta? <a href="#" class="gold-text font-medium hover:underline">Faça login</a></p>
-                    </div>
-                </div>
-
-                <div class="md:w-1/2 p-8 md:p-10">
-                    <div class="text-center mb-8">
-                        <h2 class="text-2xl font-bold text-blue-900 mb-2">Crie sua conta</h2>
-                        <p class="text-gray-600">Preencha os campos abaixo para se registrar</p>
-                    </div>
-
-                    <div class="mb-6 hidden" id="passwordStrength">
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="text-sm font-medium">Força da senha</span>
-                            <span class="text-xs" id="strengthText">Fraca</span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                            <div id="strengthBar" class="progress-bar h-1.5 rounded-full bg-red-500" style="width: 20%"></div>
-                        </div>
-                    </div>
-
-                    <form id="registrationForm" class="space-y-4" asp-action="Registrar" method="post">
-                        <div>
-                            <label asp-for="Nome" class="block text-sm font-medium mb-1">Nome completo</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-user"></i>
-                                </div>
-                                <input asp-for="Nome" class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg" />
-                            </div>
-                            <span asp-validation-for="Nome" class="text-red-600 text-xs"></span>
-                        </div>
-
-                        <div>
-                            <label asp-for="Email" class="block text-sm font-medium mb-1">Email</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <input asp-for="Email" class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg" />
-                            </div>
-                            <span asp-validation-for="Email" class="text-red-600 text-xs"></span>
-                        </div>
-
-                        <div>
-                            <label asp-for="SenhaHash" class="block text-sm font-medium mb-1">Senha</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-lock"></i>
-                                </div>
-                                <input asp-for="SenhaHash" type="password" class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg" />
-                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                                    <button type="button" class="text-gray-400 hover:text-gray-500" id="togglePassword">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <span asp-validation-for="SenhaHash" class="text-red-600 text-xs"></span>
-                        </div>
-
-                        <div>
-                            <label for="ConfirmarSenha" class="block text-sm font-medium mb-1">Confirmar Senha</label>
-                            <input type="password" id="ConfirmarSenha" name="ConfirmarSenha" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
-                        </div>
-
-                        <div>
-                            <label asp-for="FotoPerfil" class="block text-sm font-medium mb-1">Foto de Perfil (URL)</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-image"></i>
-                                </div>
-                                <input asp-for="FotoPerfil" class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg" />
-                            </div>
-                            <span asp-validation-for="FotoPerfil" class="text-red-600 text-xs"></span>
-                        </div>
-
-                        <div>
-                            <label asp-for="DataNascimento" class="block text-sm font-medium mb-1">Data de nascimento</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-calendar"></i>
-                                </div>
-                                <input asp-for="DataNascimento" type="date" class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg" />
-                            </div>
-                            <span asp-validation-for="DataNascimento" class="text-red-600 text-xs"></span>
-                        </div>
-
-                        <div class="flex items-start mt-4">
-                            <div class="flex items-center h-5">
-                                <input id="Termos" name="Termos" type="checkbox" class="h-4 w-4 text-amber-500 border-gray-300 rounded" required />
-                            </div>
-                            <div class="ml-3 text-sm">
-                                <label for="Termos" class="font-medium text-gray-700">
-                                    Eu concordo com os <a href="#" class="text-blue-600 hover:underline">Termos de Serviço</a> e <a href="#" class="text-blue-600 hover:underline">Política de Privacidade</a>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="mt-6">
-                            <button type="submit" class="w-full py-3 px-4 bg-gradient-to-br from-amber-500 to-yellow-400 text-white font-semibold rounded-lg hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
-                                Criar conta
-                            </button>
-                        </div>
-                    </form>
+                <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&q=80" alt="Pessoa lendo livro" class="w-full max-w-xs mx-auto rounded-lg floating" />
+                <div class="mt-8 text-center">
+                    <p class="text-blue-200">Já tem uma conta? <a asp-controller="Login" asp-action="Index" class="gold-text font-medium hover:underline">Faça login</a></p>
                 </div>
             </div>
+
+            <div class="md:w-1/2 p-8 md:p-10">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-blue-900 mb-2">Crie sua conta</h2>
+                    <p class="text-gray-600">Preencha os campos abaixo para se registrar</p>
+                </div>
+                <form asp-controller="Usuario" asp-action="Registrar" method="post" id="registrationForm" class="space-y-4">
+                    @Html.AntiForgeryToken()
+                    <div>
+                        <label asp-for="Nome" class="block text-sm font-medium mb-1">Nome completo</label>
+                        <input name="Nome" asp-for="Nome" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                        <span asp-validation-for="Nome" class="text-red-600 text-sm block mt-1"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="Email" class="block text-sm font-medium mb-1">Email</label>
+                        <input name="Email" asp-for="Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                        <span asp-validation-for="Email" class="text-red-600 text-sm block mt-1"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="SenhaHash" class="block text-sm font-medium mb-1">Senha</label>
+                        <input name="SenhaHash" asp-for="SenhaHash" type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                        <span asp-validation-for="SenhaHash" class="text-red-600 text-sm block mt-1"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="ConfirmarSenha" class="block text-sm font-medium mb-1">Confirmar Senha</label>
+                        <input name="ConfirmarSenha" asp-for="ConfirmarSenha" type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                        <span asp-validation-for="ConfirmarSenha" class="text-red-600 text-sm block mt-1"></span>
+                    </div>
+
+                    <div>
+                        <label asp-for="FotoPerfil" class="block text-sm font-medium mb-1">Foto de Perfil (URL)</label>
+                        <input name="FotoPerfil" asp-for="FotoPerfil" class="w-full px-4 py-2 border border-gray-300 rounded-lg" />
+                        <span asp-validation-for="FotoPerfil" class="text-red-600 text-sm block mt-1"></span>
+                    </div>
+
+                <div class="flex items-start mt-4">
+                    <input type="hidden" asp-for="Termos" value="false" />
+                    <input name="Termos" asp-for="Termos" type="checkbox" class="h-4 w-4 text-amber-500 border-gray-300 rounded" value="true" />
+                    <label asp-for="Termos" class="ml-2 text-sm font-medium text-gray-700">
+                        Eu concordo com os <a href="#" class="text-blue-600 hover:underline">Termos de Serviço</a> e <a href="#" class="text-blue-600 hover:underline">Política de Privacidade</a>
+                    </label>
+                    <span asp-validation-for="Termos" class="text-red-600 text-sm block mt-1"></span>
+                </div>
+
+                    <div class="mt-6">
+                        <button type="submit" class="w-full py-3 px-4 bg-gradient-to-br from-amber-500 to-yellow-400 text-white font-semibold rounded-lg hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                            Criar conta
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </main>
+    </div>
+</main>
 
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-
-        <script>
-            document.getElementById('togglePassword')?.addEventListener('click', function () {
-                const pwInput = document.querySelector('input[name="SenhaHash"]');
-                const icon = this.querySelector('i');
-                if (pwInput.type === 'password') {
-                    pwInput.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    pwInput.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            });
-
-            function checkPasswordStrength(password) {
-                const strengthBar = document.getElementById('strengthBar');
-                const strengthText = document.getElementById('strengthText');
-                const strengthContainer = document.getElementById('passwordStrength');
-
-                if (!password) {
-                    strengthContainer.classList.add('hidden');
-                    return;
-                }
-
-                strengthContainer.classList.remove('hidden');
-
-                let strength = 0;
-                if (password.length >= 8) strength++;
-                if (password.length >= 12) strength++;
-                if (/[A-Z]/.test(password)) strength++;
-                if (/[a-z]/.test(password)) strength++;
-                if (/\d/.test(password)) strength++;
-                if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-                if (strength <= 2) {
-                    strengthBar.className = 'progress-bar h-1.5 rounded-full bg-red-500';
-                    strengthText.textContent = 'Fraca';
-                    strengthBar.style.width = '30%';
-                } else if (strength <= 4) {
-                    strengthBar.className = 'progress-bar h-1.5 rounded-full bg-yellow-500';
-                    strengthText.textContent = 'Média';
-                    strengthBar.style.width = '60%';
-                } else {
-                    strengthBar.className = 'progress-bar h-1.5 rounded-full bg-green-500';
-                    strengthText.textContent = 'Forte';
-                    strengthBar.style.width = '100%';
-                }
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('togglePassword')?.addEventListener('click', function () {
+            const pwInput = document.querySelector('input[name="SenhaHash"]');
+            const icon = this.querySelector('i');
+            if (pwInput.type === 'password') {
+                pwInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                pwInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
-
-            document.querySelector('input[name="SenhaHash"]')?.addEventListener('input', function () {
-                checkPasswordStrength(this.value);
-            });
-
-            document.getElementById('registrationForm')?.addEventListener('submit', function (e) {
-                const pw = document.querySelector('input[name="SenhaHash"]').value;
-                const confirmPw = document.getElementById('ConfirmarSenha')?.value;
-                if (pw !== confirmPw) {
-                    e.preventDefault();
-                    alert('As senhas não coincidem!');
-                }
-                if (!document.getElementById('Termos').checked) {
-                    e.preventDefault();
-                    alert('Você deve aceitar os termos e condições.');
-                }
-            });
-
-            window.onload = () => {
-                const today = new Date();
-                const minDate = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
-                const maxDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate());
-
-                document.querySelector('input[name="DataNascimento"]').min = minDate.toISOString().split('T')[0];
-                document.querySelector('input[name="DataNascimento"]').max = maxDate.toISOString().split('T')[0];
-            };
-        </script>
-    }
-</body>
-</html>
+        });
+    </script>
+}

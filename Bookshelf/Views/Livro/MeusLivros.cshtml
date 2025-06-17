@@ -1,0 +1,61 @@
+@model List<Bookshelf.Models.ViewModels.LivroComAvaliacaoViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Meus Livros";
+}
+
+<main class="bg-gray-100 min-h-screen py-10">
+    <div class="container mx-auto">
+        <div class="mb-6">
+            <button onclick="history.back()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-md shadow-sm text-sm font-medium">
+                <i class="fas fa-arrow-left mr-2"></i> Voltar
+            </button>
+        </div>
+        <h1 class="text-3xl font-bold text-blue-900 mb-8">Meus Livros</h1>
+
+        @if (Model.Any())
+        {
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach (var livro in Model)
+                {
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="@livro.CapaUrl" alt="Capa do livro" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h2 class="text-lg font-bold text-gray-900">@livro.Titulo</h2>
+                            <p class="text-sm text-gray-600">Autor: @livro.Autor</p>
+
+                            @if (livro.Avaliacao != null)
+                            {
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-600">Sua Avaliação:</p>
+                                    <p class="text-yellow-500">
+                                        @for (int i = 0; i < livro.Avaliacao.Nota; i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                    </p>
+                                    <p class="text-sm text-gray-600">Comentário:</p>
+                                    <p class="text-gray-800">@livro.Avaliacao.Comentario</p>
+                                    <a href="@Url.Action("EditarAvaliacao", "Livro", new { livroId = livro.LivroId })" class="text-blue-600 hover:underline text-sm">Editar Avaliação</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Avaliar", "Livro", new { livroId = livro.LivroId })" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                                    Avaliar Livro
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-gray-600">
+                <p>Você ainda não adicionou nenhum livro à sua lista.</p>
+            </div>
+        }
+    </div>
+</main>
